@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">BarberShop</string>
+
+    <!--LoginActivity-->
+    <string name="acti_login_header">TRẢI NGHIỆM TIỆN ÍCH CÙNG BARBER SHOP</string>
+    <string name="acti_login_title1">➤ Đặt lịch nhanh chóng</string>
+    <string name="acti_login_title2">➤ Xem những kiểu tóc thịnh hành nhất</string>
+    <string name="acti_login_title3">➤ Mua hàng tiện lợi cùng Barber Shop</string>
+    <string name="acti_login_title4">➤ Đăng nhập dễ dàng, không lo quên mật khẩu</string>
+    <string name="acti_login_btnLogin">Đăng nhập bằng số điện thoại</string>
+
+
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_home">Home</string>
+    <string name="title_shop">Shop</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_settings">Cài đặt</string>
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/imgImageCartProduct"
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="3.5" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNameCartProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="iPad WiFi 128GB New 2018
+Pink"
+                android:textColor="@color/colorBlack" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPriceCartProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9.990.000"
+                    android:textColor="@color/colorRed"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="Đ"
+                    android:textColor="@color/colorRed"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnDecrease"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/tru" />
+
+                <TextView
+                    android:id="@+id/tvNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btnIncrease"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/cong" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDelProductCart"
+            android:layout_width="0dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="-10dp"
+            android:layout_weight="1"
+            android:background="@drawable/deletebuton" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.barbershop.activity.ConfirmCodeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="22dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorBlack"
+        android:text="Nhập mã đã được gửi tới" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/tvPhoneNumber"
+        android:textSize="22dp"
+        android:text="+84911830496"
+        android:textColor="@color/colorBlack"/>
+
+    <com.chaos.view.PinView
+        android:id="@+id/pvCode"
+        android:gravity="center"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textSize="18sp"
+        app:itemCount="6"
+        app:itemHeight="42dp"
+        app:itemRadius="10dp"
+        app:itemWidth="42dp"
+        app:lineColor="#444444" />
+
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_gravity="center"
+        android:layout_width="290dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_gold"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/colorBlack"
+        android:text="Tiếp tục" />
+
+    <TextView
+        android:id="@+id/tvResendCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gửi lại mã xác nhận"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorBlue"/>
+
+    <TextView
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="8dp"
+        android:text="Bằng việc nhấn Tiếp tục, bạn chấp nhận đồng ý với Điều khoản dịch vụ và Quyền riêng tư"/>
+
+</LinearLayout>
