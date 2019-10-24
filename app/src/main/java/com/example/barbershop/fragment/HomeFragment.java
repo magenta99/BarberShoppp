@@ -16,7 +16,6 @@ import com.example.authenticationsms.R;
 
 public class HomeFragment extends Fragment {
     private ViewFlipper viewFlipper;
-    private NestedScrollView view ;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

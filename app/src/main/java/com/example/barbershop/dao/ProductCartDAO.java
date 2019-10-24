@@ -91,6 +91,11 @@ public class ProductCartDAO {
         return productCartList;
     }
 
+    public void deleteCart() {
+        String QUERY = "DELETE FROM GioHang ";
+        SQLiteDatabase sqLiteDatabase = database.getWritableDatabase();
+        sqLiteDatabase.execSQL(QUERY);
+    }
 
     public double getTongTien() {
         double tongtien = 0;

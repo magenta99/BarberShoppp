@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -70,6 +71,8 @@ public class ShopFragment extends Fragment {
         rvProduct.setAdapter(productAdapter);
         rvProduct.setLayoutManager(gridLayoutManager);
         rvProduct.hasFixedSize();
+        rvProduct.setNestedScrollingEnabled(false);
+
         productAdapter.notifyDataSetChanged();
         loadProducts();
     }

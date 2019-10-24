@@ -1,6 +1,7 @@
 package com.example.barbershop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ProductCartAdapter.ProductCartHolder productCartHolder, int position) {
+    public void onBindViewHolder(@NonNull final ProductCartAdapter.ProductCartHolder productCartHolder, final int position) {
         productCartHolder.productCart = productCartList.get(position);
         productCartHolder.tvNameCartProduct.setText(productCartHolder.productCart.PRODUCT_CART_NAME);
         productCartHolder.tvPriceCartProduct.setText(decimalFormat.format(productCartHolder.productCart.PRODUCT_CART_PRICE));
@@ -51,10 +52,10 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             @Override
             public void onClick(View view) {
                 ProductCartDAO productCartDAO = new ProductCartDAO(context);
-                productCartHolder.productCart.PRODUCT_CART_NUMBER ++;
-                productCartDAO.updateProductCartAmount(new ProductCart("",productCartHolder.productCart.PRODUCT_CART_NUMBER,0,""),productCartHolder.productCart.PRODUCT_CART_NAME);
+                productCartHolder.productCart.PRODUCT_CART_NUMBER++;
+                productCartDAO.updateProductCartAmount(new ProductCart("", productCartHolder.productCart.PRODUCT_CART_NUMBER, 0, ""), productCartHolder.productCart.PRODUCT_CART_NAME);
                 productCartHolder.tvNumber.setText(Integer.toString(productCartHolder.productCart.PRODUCT_CART_NUMBER));
-                ((CartActivity)context).recreate();
+                ((CartActivity) context).recreate();
             }
         });
 
@@ -63,8 +64,8 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             public void onClick(View view) {
                 ProductCartDAO productCartDAO = new ProductCartDAO(context);
                 if (productCartHolder.productCart.PRODUCT_CART_NUMBER > 0) {
-                    productCartHolder.productCart.PRODUCT_CART_NUMBER --;
-                    productCartDAO.updateProductCartAmount(new ProductCart("",productCartHolder.productCart.PRODUCT_CART_NUMBER,0,""),productCartHolder.productCart.PRODUCT_CART_NAME);
+                    productCartHolder.productCart.PRODUCT_CART_NUMBER--;
+                    productCartDAO.updateProductCartAmount(new ProductCart("", productCartHolder.productCart.PRODUCT_CART_NUMBER, 0, ""), productCartHolder.productCart.PRODUCT_CART_NAME);
                     productCartHolder.tvNumber.setText(Integer.toString(productCartHolder.productCart.PRODUCT_CART_NUMBER));
                     ((CartActivity) context).recreate();
 
@@ -74,7 +75,26 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             }
         });
 
+        productCartHolder.btnDelProductCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductCartDAO productCartDAO = new ProductCartDAO(context);
+                removeProductCart(position);
+                productCartDAO.deleteProductCart(productCartHolder.productCart.PRODUCT_CART_NAME);
+                Toasty.success(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                ((CartActivity) context).recreate();
+//                context.sendBroadcast(new Intent("update"));
 
+            }
+        });
+
+
+    }
+
+    private void removeProductCart(int position) {
+        productCartList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, productCartList.size());
     }
 
     @Override
