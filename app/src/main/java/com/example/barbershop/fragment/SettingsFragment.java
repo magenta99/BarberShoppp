@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +27,12 @@ import com.example.barbershop.activity.MainActivity;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsFragment extends Fragment {
-    LinearLayout llSignOut,llSalonList,llSalon,llTV;
+    LinearLayout llSignOut,llSalonList,llSalon,llTV,llHair;
     private TextView tvPhoneSettings;
     @Nullable
     @Override
@@ -44,6 +47,7 @@ public class SettingsFragment extends Fragment {
         tvPhoneSettings = view.findViewById(R.id.tvPhoneSettings);
         llSignOut= view.findViewById(R.id.llSignOut);
         llSalon= view.findViewById(R.id.llSalon);
+        llHair= view.findViewById(R.id.llHair);
         llTV= view.findViewById(R.id.llTV);
         llSalonList = view.findViewById(R.id.llSalonList);
         llSignOut.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +71,13 @@ public class SettingsFragment extends Fragment {
                 });
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
+            }
+        });
+
+        llHair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toasty.warning(getContext(),"Bạn không có lịch sử cắt tóc", Toast.LENGTH_SHORT).show();
             }
         });
 
