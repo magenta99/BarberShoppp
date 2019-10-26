@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -23,6 +24,7 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.CartActivity;
 import com.example.barbershop.adapter.ProductAdapter;
+import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.Product;
 
 import org.json.JSONArray;
@@ -40,6 +42,8 @@ public class ShopFragment extends Fragment {
     private RecyclerView rvProduct;
     private List<Product> productList;
     private ImageButton btnCart;
+    private TextView tvProductCart;
+    private ProductCartDAO productCartDAO;
 
     @Nullable
     @Override
@@ -55,6 +59,8 @@ public class ShopFragment extends Fragment {
     }
 
     private void init(View view) {
+        productCartDAO = new ProductCartDAO(getContext());
+        tvProductCart = view.findViewById(R.id.tvProductCart);
         btnCart = view.findViewById(R.id.btnCart);
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +78,15 @@ public class ShopFragment extends Fragment {
         rvProduct.setLayoutManager(gridLayoutManager);
         rvProduct.hasFixedSize();
         rvProduct.setNestedScrollingEnabled(false);
-
         productAdapter.notifyDataSetChanged();
         loadProducts();
+
+        tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
+
     }
 
-    private void loadProducts() {
 
+    private void loadProducts() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/{typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")

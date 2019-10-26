@@ -26,11 +26,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String phoneNumber = edtPhone.getText().toString();
-                Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("phoneNumber",phoneNumber);
-                intent.putExtra("Key",bundle);
-                startActivity(intent);
+                if(phoneNumber.isEmpty()){
+                    showMessegeWarning("Vui lòng nhập số điện thoại");
+                }else {
+                    Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phoneNumber",phoneNumber);
+                    intent.putExtra("Key",bundle);
+                    startActivity(intent);
+                }
             }
         });
     }

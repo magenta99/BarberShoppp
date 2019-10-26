@@ -116,9 +116,9 @@ public class ProductCartDAO {
         return tongtien;
     }
 
-    public int getNumberInCart(String username) {
+    public int getNumberInCart() {
         int soluong = 0;
-        String QUERY = "SELECT COUNT(MaSanPham) FROM GioHang  WHERE Username = '" + username + "'";
+        String QUERY = "SELECT COUNT(TenSanPham) FROM GioHang";
         SQLiteDatabase sqLiteDatabase = database.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(QUERY, null);
         if (cursor != null) {

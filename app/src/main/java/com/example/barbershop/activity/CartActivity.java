@@ -16,6 +16,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.BaseActivity;
 import com.example.barbershop.adapter.ProductCartAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.ProductCart;
@@ -29,7 +30,7 @@ import es.dmoral.toasty.Toasty;
 
 import static com.example.barbershop.adapter.ProductAdapter.decimalFormat;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends BaseActivity {
     ProductCartDAO productCartDAO;
     ProductCartAdapter productCartAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -61,6 +62,7 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setAdapter(productCartAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         productCartAdapter.notifyDataSetChanged();
+        final String adress = edtAdressInCart.getText().toString();
 
         double tongtien = productCartDAO.getTongTien();
         if (tvSumPrice != null)
@@ -70,30 +72,34 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    for (int i = 0; i <= productCartList.size(); i++) {
-                        ProductCart productCart = productCartList.get(i);
-                        int sumPrice = productCart.PRODUCT_CART_PRICE * productCart.PRODUCT_CART_NUMBER;
-                        AndroidNetworking.post("http://barber-shopp.herokuapp.com/order")
-                                .addBodyParameter("imageProduct", productCart.PRODUCT_CART_IMAGE)
-                                .addBodyParameter("nameProduct", productCart.PRODUCT_CART_NAME)
-                                .addBodyParameter("amountProduct", Integer.toString(productCart.PRODUCT_CART_NUMBER))
-                                .addBodyParameter("priceProduct", Integer.toString(sumPrice))
-                                .addBodyParameter("fullName", "Huy Bà")
-                                .addBodyParameter("phoneNumber", "0911830496")
-                                .addBodyParameter("address", "Nguyễn Ngọc Zũ")
-                                .setTag("test")
-                                .setPriority(Priority.MEDIUM)
-                                .build()
-                                .getAsJSONObject(new JSONObjectRequestListener() {
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                    }
+                    if(productCartList.size() == 0){
+                        showMessegeWarning("Bạn không có sản phẩm nào");
+                    }else {
+                        for (int i = 0; i <= productCartList.size(); i++) {
+                            ProductCart productCart = productCartList.get(i);
+                            int sumPrice = productCart.PRODUCT_CART_PRICE * productCart.PRODUCT_CART_NUMBER;
+                            AndroidNetworking.post("http://barber-shopp.herokuapp.com/order")
+                                    .addBodyParameter("imageProduct", productCart.PRODUCT_CART_IMAGE)
+                                    .addBodyParameter("nameProduct", productCart.PRODUCT_CART_NAME)
+                                    .addBodyParameter("amountProduct", Integer.toString(productCart.PRODUCT_CART_NUMBER))
+                                    .addBodyParameter("priceProduct", Integer.toString(sumPrice))
+                                    .addBodyParameter("fullName", "Huy Anh")
+                                    .addBodyParameter("phoneNumber", getRootUsername())
+                                    .addBodyParameter("address", adress)
+                                    .setTag("test")
+                                    .setPriority(Priority.MEDIUM)
+                                    .build()
+                                    .getAsJSONObject(new JSONObjectRequestListener() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                        }
 
-                                    @Override
-                                    public void onError(ANError error) {
-                                        // handle error
-                                    }
-                                });
+                                        @Override
+                                        public void onError(ANError error) {
+                                            // handle error
+                                        }
+                                    });
+                        }
                     }
                 } catch (Exception e) {
 
@@ -106,5 +112,9 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-
+    private String getRootUsername() {
+        String name;
+        name = getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", null);
+        return name;
+    }
 }

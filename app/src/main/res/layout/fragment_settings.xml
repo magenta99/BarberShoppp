@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0911830496"
+                android:id="@+id/tvPhoneSettings"
                 android:textColor="@color/colorBlack"
                 android:textSize="14dp" />
 
@@ -120,7 +121,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llShareFacebook"
+                android:id="@+id/llSalonList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -169,7 +170,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llMyVoucher"
+                android:id="@+id/llTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -194,6 +195,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llSalon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -218,6 +220,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llSignOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
