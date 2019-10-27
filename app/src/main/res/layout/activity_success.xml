@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginBottom="50dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/checkeddd"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="28dp"
+        android:textStyle="bold"
+        android:text="Đặt lịch thành công"/>
+
+    <Button
+        android:id="@+id/btnHome"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_gold"
+        android:textColor="@color/colorBlack"
+        android:text="Màn hình chính"
+        android:textStyle="bold" />
+
+
+</android.widget.LinearLayout>
