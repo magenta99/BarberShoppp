@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -13,17 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name="com.example.barbershop.TVActivity"
+
+
+        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+        <meta-data android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+
+        <activity
+            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+
+        <activity android:name="com.example.barbershop.activity.TVActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
-            android:name="com.example.barbershop.SalonActivity"
+            android:name="com.example.barbershop.activity.SalonActivity"
             android:parentActivityName="com.example.barbershop.activity.HomeActivity"
             android:theme="@style/ThemeBarber" />
         <activity
-            android:name="com.example.barbershop.BSTActivity"
+            android:name="com.example.barbershop.activity.BSTActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.example.barbershop.SuccessActivity"
+            android:name="com.example.barbershop.activity.SuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -38,17 +53,19 @@
             android:name="com.example.barbershop.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.example.barbershop.activity.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBarber" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.barbershop.activity.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.ConfirmCodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

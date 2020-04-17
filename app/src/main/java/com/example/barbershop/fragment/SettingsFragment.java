@@ -4,13 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,36 +16,34 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.authenticationsms.R;
-import com.example.barbershop.BSTActivity;
-import com.example.barbershop.SalonActivity;
-import com.example.barbershop.TVActivity;
+import com.example.barbershop.activity.BSTActivity;
+import com.example.barbershop.activity.SalonActivity;
+import com.example.barbershop.activity.TVActivity;
 import com.example.barbershop.activity.LoginActivity;
-import com.example.barbershop.activity.MainActivity;
-
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsFragment extends Fragment {
-    LinearLayout llSignOut,llSalonList,llSalon,llTV,llHair;
+    LinearLayout llSignOut, llSalonList, llSalon, llTV, llHair;
     private TextView tvPhoneSettings;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_settings,container,false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
         initView(view);
 
         return view;
     }
 
-    public void initView(View view){
+    public void initView(View view) {
         tvPhoneSettings = view.findViewById(R.id.tvPhoneSettings);
-        llSignOut= view.findViewById(R.id.llSignOut);
-        llSalon= view.findViewById(R.id.llSalon);
-        llHair= view.findViewById(R.id.llHair);
-        llTV= view.findViewById(R.id.llTV);
+        llSignOut = view.findViewById(R.id.llSignOut);
+        llSalon = view.findViewById(R.id.llSalon);
+        llHair = view.findViewById(R.id.llHair);
+        llTV = view.findViewById(R.id.llTV);
         llSalonList = view.findViewById(R.id.llSalonList);
         llSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +72,7 @@ public class SettingsFragment extends Fragment {
         llHair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toasty.warning(getContext(),"Bạn không có lịch sử cắt tóc", Toast.LENGTH_SHORT).show();
+                Toasty.warning(getContext(), "Bạn không có lịch sử cắt tóc", Toast.LENGTH_SHORT).show();
             }
         });
 

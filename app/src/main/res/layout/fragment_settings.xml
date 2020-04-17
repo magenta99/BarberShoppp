@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HUY ANH"
+                android:text="BARBER"
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp"
                 android:textStyle="bold" />

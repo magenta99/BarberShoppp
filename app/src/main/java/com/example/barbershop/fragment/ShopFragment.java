@@ -54,7 +54,6 @@ public class ShopFragment extends Fragment {
         for (int image : images) {
             flipperImages(image);
         }
-
         return view;
     }
 
@@ -80,7 +79,6 @@ public class ShopFragment extends Fragment {
         rvProduct.setNestedScrollingEnabled(false);
         productAdapter.notifyDataSetChanged();
         loadProducts();
-
         tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
 
     }

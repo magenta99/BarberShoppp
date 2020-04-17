@@ -6,6 +6,6 @@
     android:layout_margin="4dp"
     android:id="@+id/rvSalon"
     android:layout_height="wrap_content"
-    tools:context="com.example.barbershop.SalonActivity">
+    tools:context="com.example.barbershop.activity.SalonActivity">
 
 </androidx.recyclerview.widget.RecyclerView>

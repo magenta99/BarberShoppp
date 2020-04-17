@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.authenticationsms.R;
-import com.example.barbershop.BaseActivity;
 import com.example.barbershop.model.ProductCart;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.squareup.picasso.Picasso;

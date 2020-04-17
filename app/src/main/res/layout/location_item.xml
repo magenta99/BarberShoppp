@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="4dp"
+    android:layout_marginStart="4dp"
     android:layout_marginBottom="4dp"
     android:background="@color/colorWhite"
     app:cardCornerRadius="5dp">
@@ -37,16 +38,16 @@
             android:textSize="10dp"
             />
 
-        <TextView
-            android:id="@+id/tvDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginRight="4dp"
-            android:text="4.53 Km"
-            android:textColor="@color/colorRed"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/tvDistance"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginRight="4dp"-->
+<!--            android:text="4.53 Km"-->
+<!--            android:textColor="@color/colorRed"-->
+<!--            android:textStyle="bold" />-->
 
     </LinearLayout>
 

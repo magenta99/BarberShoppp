@@ -13,7 +13,7 @@ import static com.example.barbershop.database.Constants.SCHEDULE_TABLE;
 
 public class Database extends SQLiteOpenHelper {
     public Database(Context context){
-        super(context,"barber4.sql",null,1);
+        super(context,"barber5.sql",null,1);
     }
 
     @Override

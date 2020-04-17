@@ -1,4 +1,4 @@
-package com.example.barbershop;
+package com.example.barbershop.activity;
 
 import android.content.Intent;
 import android.widget.Toast;

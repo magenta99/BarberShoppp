@@ -1,12 +1,11 @@
-package com.example.barbershop;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.barbershop.activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseActivity;
 import com.example.barbershop.activity.HomeActivity;
 
 public class SuccessActivity extends BaseActivity {

@@ -1,6 +1,5 @@
 package com.example.barbershop.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,6 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
-import com.example.barbershop.BaseActivity;
 import com.example.barbershop.adapter.ProductCartAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.ProductCart;
@@ -25,7 +23,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import es.dmoral.toasty.Toasty;
 
 import static com.example.barbershop.adapter.ProductAdapter.decimalFormat;
@@ -83,7 +80,7 @@ public class CartActivity extends BaseActivity {
                                     .addBodyParameter("nameProduct", productCart.PRODUCT_CART_NAME)
                                     .addBodyParameter("amountProduct", Integer.toString(productCart.PRODUCT_CART_NUMBER))
                                     .addBodyParameter("priceProduct", Integer.toString(sumPrice))
-                                    .addBodyParameter("fullName", "Huy Anh")
+                                    .addBodyParameter("fullName", "Barber")
                                     .addBodyParameter("phoneNumber", getRootUsername())
                                     .addBodyParameter("address", adress)
                                     .setTag("test")
@@ -102,14 +99,12 @@ public class CartActivity extends BaseActivity {
                         }
                     }
                 } catch (Exception e) {
-
                 }
                 Toasty.success(CartActivity.this, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                 productCartDAO.deleteCart();
                 ((CartActivity.this)).recreate();
             }
         });
-
     }
 
     private String getRootUsername() {

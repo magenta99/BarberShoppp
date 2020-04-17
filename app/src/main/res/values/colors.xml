@@ -4,13 +4,20 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorGold">#FFDD00</color>
+    <color name="colorGold">#ffcc33</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorPreGold">#F0BE00</color>
     <color name="colorMain">#FFBF00</color>
     <color name="colorPreMain">#E69A00</color>
     <color name="colorBlue">#486FEC</color>
     <color name="colorGrayyy">#f2f2f2</color>
+    <color name="colorGreen">#34CE3C</color>
+    <color name="colorUnselected">#DDDDDD</color>
+
+    <color name="colorOrange">#FDC830
+
+    </color>
+
 
     <color name="colorWhite">#FFFFFF</color>
 

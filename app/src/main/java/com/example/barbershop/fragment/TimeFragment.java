@@ -7,11 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,14 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
-import com.example.barbershop.model.Booking;
-import com.example.barbershop.model.Location;
-import com.example.barbershop.model.Schedule;
-import com.example.barbershop.adapter.LocationAdapter;
 import com.example.barbershop.adapter.ScheduleAdapter;
+import com.example.barbershop.model.Booking;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,37 +36,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class BookFragment extends Fragment {
-    private List<String> dayList;
-    private Spinner spListLocation;
-    private ArrayAdapter<String> spAdapter;
-    private RecyclerView rvLocation, rvSchedule;
-    private LocationAdapter locationAdapter;
-    private ScheduleAdapter scheduleAdapter;
-    private GridLayoutManager gridLayoutManagerLocation, gridLayoutManagerSchedule;
-    private List<Location> locationList;
-    private List<Schedule> scheduleList;
-    private List<Booking> bookingList;
+public class TimeFragment extends Fragment {
     private TextView dateBook1;
     private TextView dateBook2;
     private CardView cardToday;
     private CardView cardTomorrow;
-    Button btnSchedule;
+    private RecyclerView rvSchedule;
+    private List<Booking> bookingList;
+    private ScheduleAdapter scheduleAdapter;
+    private GridLayoutManager gridLayoutManagerSchedule;
     String schedule;
-    String dateSchedule;
+
+    static TimeFragment instance;
+    public static TimeFragment getInstance(){
+        if(instance == null){
+            instance = new TimeFragment();
+        }
+        return instance;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_book, container, false);
+        View view = inflater.inflate(R.layout.fragment_time, container, false);
         initView(view);
         return view;
     }
 
     private void initView(View view) {
-
         dateBook1 = view.findViewById(R.id.dateBook1);
         dateBook2 = view.findViewById(R.id.dateBook2);
         cardToday = view.findViewById(R.id.cardToday);
@@ -125,56 +114,6 @@ public class BookFragment extends Fragment {
                 loadBooking(2);
             }
         });
-
-//        btnSchedule = view.findViewById(R.id.btnSchedule);
-//        locationList = new ArrayList<>();
-//        locationList.add("TP Hà Nội");
-//        rvLocation = view.findViewById(R.id.rvLocation);
-//        spListLocation = view.findViewById(R.id.spnLocation);
-//        spnDay = view.findViewById(R.id.spnDay);
-//        spAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, locationList);
-//        spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spListLocation.setAdapter(spAdapter);
-
-
-
-
-//        btnSchedule.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                try {
-//                    if (location == null) {
-//                        Toasty.warning(getContext(), "Vui lòng chọn salon", Toast.LENGTH_SHORT).show();
-//                    } else if (schedule == null) {
-//                        Toasty.warning(getContext(), "Vui lòng chọn giờ cắt", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        AndroidNetworking.post("http://barber-shopp.herokuapp.com/schedule")
-//                                .addBodyParameter("fullName", "Guest")
-//                                .addBodyParameter("phoneNumber", getRootUsername())
-//                                .addBodyParameter("day", dateSchedule)
-//                                .addBodyParameter("time", schedule)
-//                                .addBodyParameter("place", location)
-//                                .setTag("test")
-//                                .setPriority(Priority.MEDIUM)
-//                                .build()
-//                                .getAsJSONObject(new JSONObjectRequestListener() {
-//                                    @Override
-//                                    public void onResponse(JSONObject response) {
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(ANError error) {
-//                                        // handle error
-//                                    }
-//                                });
-//                        Intent intent = new Intent(getActivity(), SuccessActivity.class);
-//                        startActivity(intent);
-//                    }
-//                } catch (Exception e) {
-//                }
-//            }
-//        });
-
     }
 
     private void loadBooking(int day) {
@@ -224,13 +163,5 @@ public class BookFragment extends Fragment {
                 });
 
     }
-
-
-    private String getRootUsername() {
-        String name;
-        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", null);
-        return name;
-    }
-
 
 }

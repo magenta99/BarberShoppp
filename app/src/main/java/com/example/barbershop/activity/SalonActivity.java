@@ -1,4 +1,4 @@
-package com.example.barbershop;
+package com.example.barbershop.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,14 +8,14 @@ import android.os.Bundle;
 
 import com.example.authenticationsms.R;
 import com.example.barbershop.adapter.LocationAdapter;
-import com.example.barbershop.dao.LocationDAO;
+import com.example.barbershop.model.Location;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SalonActivity extends AppCompatActivity {
     List<Location> lctList;
-    LocationDAO locationDAO;
+//    LocationDAO locationDAO;
     LocationAdapter locationAdapter;
     RecyclerView rvSalon;
     GridLayoutManager gridLayoutManager;
@@ -27,8 +27,8 @@ public class SalonActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Danh sách salon");
         rvSalon = findViewById(R.id.rvSalon);
         lctList = new ArrayList<>();
-        locationDAO = new LocationDAO(this);
-        lctList = locationDAO.getAllLocation();
+//        locationDAO = new LocationDAO(this);
+//        lctList = locationDAO.getAllLocation();
         locationAdapter = new LocationAdapter(lctList, this);
         gridLayoutManager = new GridLayoutManager(this, 2);
         rvSalon.setLayoutManager(gridLayoutManager);

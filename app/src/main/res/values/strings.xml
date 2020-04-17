@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">BarberShop</string>
+
+
+    <string name="app_name">BookingShop</string>
+    <string name="FACEBOOK_APP_ID">574772563443590</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>
+
 
     <!--LoginActivity-->
     <string name="acti_login_header">TRẢI NGHIỆM TIỆN ÍCH CÙNG BARBER SHOP</string>

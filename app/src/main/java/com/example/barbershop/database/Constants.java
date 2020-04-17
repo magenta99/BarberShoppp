@@ -28,7 +28,7 @@ public class Constants {
     public static final String LOCATION_DISTANCE = "KhoangCach";
 
     public static final String CREATE_LOCATION_TABLE = "CREATE TABLE " + LOCATION_TABLE + "(" +
-            "" + LOCATION_NAME + " NVARCHAR(100)," +
+            "" + LOCATION_NAME + " NVARCHAR(100) PRIMARY KEY," +
             "" + LOCATION_DETAIL + " NVARCHAR(100)," +
             "" + LOCATION_DISTANCE + " NVARCHAR(100)" +
             ")";
@@ -41,7 +41,7 @@ public class Constants {
     public static final String SCHEDULE_INFO = "ThongTin";
 
     public static final String CREATE_SCHEDULE_TABLE = "CREATE TABLE " + SCHEDULE_TABLE + "(" +
-            "" + SCHEDULE_TIME + " NVARCHAR(100)," +
+            "" + SCHEDULE_TIME + " NVARCHAR(100) PRIMARY KEY," +
             "" + SCHEDULE_INFO + " NVARCHAR(100)" +
             ")";
 

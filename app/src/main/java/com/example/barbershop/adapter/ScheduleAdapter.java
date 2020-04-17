@@ -6,24 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.authenticationsms.R;
-import com.example.barbershop.Schedule;
-
+import com.example.barbershop.model.Booking;
+import com.example.barbershop.model.Schedule;
 import java.util.List;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleHolder> {
     int selectedPosition = -1;
 
-    List<Schedule> scheduleList;
+    List<Booking> bookingList;
     Context context;
 
-    public ScheduleAdapter(List<Schedule> locationList, Context context) {
-        this.scheduleList = locationList;
+    public ScheduleAdapter( Context context,List<Booking> bookingList) {
+        this.bookingList = bookingList;
         this.context = context;
     }
 
@@ -55,34 +53,48 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         } else {
             scheduleHolder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
-        scheduleHolder.schedule = scheduleList.get(position);
-        scheduleHolder.tvTime.setText(scheduleHolder.schedule.SCHEDULE_TIME);
-        scheduleHolder.tvInfo.setText(scheduleHolder.schedule.SCHEDULE_INFO);
+        scheduleHolder.booking = bookingList.get(position);
+        scheduleHolder.tvTime.setText(scheduleHolder.booking.getTime());
+        if(scheduleHolder.booking.isExist() == true){
+            scheduleHolder.tvInfo.setText("Còn chỗ");
+            scheduleHolder.colorStatus.setBackgroundColor(Color.GREEN);
+
+        }else {
+            scheduleHolder.tvInfo.setText("Hết chỗ");
+            scheduleHolder.colorStatus.setBackgroundColor(Color.RED);
+            scheduleHolder.itemView.setClickable(false);
+            scheduleHolder.itemView.setBackgroundColor(Color.parseColor("#f2f2f2"));
+
+        }
 
         scheduleHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedPosition = position;
                 notifyDataSetChanged();
-                onItemClickListner.onClick(scheduleHolder.schedule.SCHEDULE_TIME);
+                onItemClickListner.onClick(scheduleHolder.booking.getTime());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return scheduleList.size();
+        return bookingList.size();
     }
 
     public class ScheduleHolder extends RecyclerView.ViewHolder {
         private TextView tvTime;
         private TextView tvInfo;
-        private Schedule schedule;
+        private Booking booking;
+        private TextView colorStatus;
+
 
         public ScheduleHolder(@NonNull View itemView) {
             super(itemView);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvInfo = itemView.findViewById(R.id.tvInfo);
+            colorStatus =itemView.findViewById(R.id.colorStatus);
+
         }
     }
 

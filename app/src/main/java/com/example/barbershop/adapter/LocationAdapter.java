@@ -1,31 +1,21 @@
 package com.example.barbershop.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
-
 import com.example.authenticationsms.R;
-import com.example.barbershop.Location;
-import com.example.barbershop.fragment.BookFragment;
+import com.example.barbershop.model.Location;
 
 import java.util.List;
 
 import static android.app.PendingIntent.getActivity;
-import static android.content.Context.MODE_PRIVATE;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationHolder> {
     int selectedPosition = -1;
@@ -67,16 +57,15 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             locationHolder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
         locationHolder.location = locationList.get(position);
-        locationHolder.tvLocation.setText(locationHolder.location.LOCATION_NAME);
-        locationHolder.tvDetailLocation.setText(locationHolder.location.LOCATION_DETAIL);
-        locationHolder.tvDistance.setText(locationHolder.location.LOCATION_DISTANCE);
+        locationHolder.tvLocation.setText(locationHolder.location.getAddressLocation());
+        locationHolder.tvDetailLocation.setText(locationHolder.location.getDistrictDetailLocation());
 
         locationHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedPosition = position;
                 notifyDataSetChanged();
-                onItemClickListner.onClick(locationHolder.location.LOCATION_NAME);
+                onItemClickListner.onClick(locationHolder.location.getAddressLocation());
             }
         });
     }
@@ -89,14 +78,13 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public class LocationHolder extends RecyclerView.ViewHolder {
         private TextView tvLocation;
         private TextView tvDetailLocation;
-        private TextView tvDistance;
         private Location location;
 
         public LocationHolder(@NonNull View itemView) {
             super(itemView);
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvDetailLocation = itemView.findViewById(R.id.tvDetailLocation);
-            tvDistance = itemView.findViewById(R.id.tvDistance);
+//            tvDistance = itemView.findViewById(R.id.tvDistance);
 
         }
     }

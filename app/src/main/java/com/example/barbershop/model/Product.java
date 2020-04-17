@@ -26,6 +26,7 @@ public class Product {
     private String descriptionProduct;
 
 
+
     public String getId() {
         return id;
     }

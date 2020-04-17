@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.authenticationsms.R;
 import com.example.barbershop.fragment.BookFragment;
+import com.example.barbershop.fragment.BookingFragment;
 import com.example.barbershop.fragment.HomeFragment;
 import com.example.barbershop.fragment.SettingsFragment;
 import com.example.barbershop.fragment.ShopFragment;
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
                 case R.id.navigation_settings:
-                    selectFragment = new SettingsFragment();
+                    selectFragment = new BookingFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
             }

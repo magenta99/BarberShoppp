@@ -1,4 +1,4 @@
-package com.example.barbershop;
+package com.example.barbershop.model;
 
 public class Schedule {
     public String SCHEDULE_TIME ;

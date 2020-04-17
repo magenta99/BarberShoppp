@@ -4,18 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.example.authenticationsms.R;
 
 public class HomeFragment extends Fragment {
     private ViewFlipper viewFlipper;
+    Button btnBookNow1,btnBookNow2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +39,30 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView(View view){
+        btnBookNow1 = view.findViewById(R.id.btnBookNow1);
+        btnBookNow2 = view.findViewById(R.id.btnBookNow2);
+
         viewFlipper = view.findViewById(R.id.vpSlider);
+        btnBookNow1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookFragment nextFrag= new BookFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnBookNow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookFragment nextFrag= new BookFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 }
