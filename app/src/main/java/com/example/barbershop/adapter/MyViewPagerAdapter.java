@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.barbershop.fragment.ConfirmFragment;
 import com.example.barbershop.fragment.LocationFragment;
-import com.example.barbershop.fragment.ServiceFragment;
+import com.example.barbershop.fragment.StylistServiceFragment;
 import com.example.barbershop.fragment.TimeFragment;
 
 public class MyViewPagerAdapter extends FragmentPagerAdapter {
@@ -24,7 +24,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return TimeFragment.getInstance();
             case 2:
-                return ServiceFragment.getInstance();
+                return StylistServiceFragment.getInstance();
             case 3:
                 return ConfirmFragment.getInstance();
         }
@@ -33,7 +33,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4
-                ;
+        return 4;
     }
+
 }

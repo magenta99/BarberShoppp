@@ -137,8 +137,6 @@ public class BookFragment extends Fragment {
 //        spListLocation.setAdapter(spAdapter);
 
 
-
-
 //        btnSchedule.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -146,7 +144,7 @@ public class BookFragment extends Fragment {
 //                    if (location == null) {
 //                        Toasty.warning(getContext(), "Vui lòng chọn salon", Toast.LENGTH_SHORT).show();
 //                    } else if (schedule == null) {
-//                        Toasty.warning(getContext(), "Vui lòng chọn giờ cắt", Toast.LENGTH_SHORT).show();
+//                        Toasty.wa rning(getContext(), "Vui lòng chọn giờ cắt", Toast.LENGTH_SHORT).show();
 //                    } else {
 //                        AndroidNetworking.post("http://barber-shopp.herokuapp.com/schedule")
 //                                .addBodyParameter("fullName", "Guest")
@@ -201,13 +199,12 @@ public class BookFragment extends Fragment {
                             }
                             scheduleAdapter = new ScheduleAdapter(getContext(), bookingList);
                             gridLayoutManagerSchedule = new GridLayoutManager(getContext(), 4, GridLayoutManager.HORIZONTAL, false);
-
                             rvSchedule.setLayoutManager(gridLayoutManagerSchedule);
                             rvSchedule.setAdapter(scheduleAdapter);
                             scheduleAdapter.notifyDataSetChanged();
                             scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
                                 @Override
-                                public void onClick(String strSchedule) {
+                                public void onClick(String strSchedule,String stb) {
                                     schedule = strSchedule;
                                 }
                             });

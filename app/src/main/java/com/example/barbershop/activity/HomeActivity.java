@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
                 case R.id.navigation_book:
-                    selectFragment = new BookFragment();
+                    selectFragment = new BookingFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
                 case R.id.navigation_shop:
@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
                 case R.id.navigation_settings:
-                    selectFragment = new BookingFragment();
+                    selectFragment = new SettingsFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
             }

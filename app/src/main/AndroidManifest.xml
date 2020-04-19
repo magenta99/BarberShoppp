@@ -53,7 +53,6 @@
             android:name="com.example.barbershop.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         </activity>
         <activity
             android:name="com.example.barbershop.activity.HomeActivity"

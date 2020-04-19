@@ -1,5 +1,6 @@
 package com.example.barbershop.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,8 +47,9 @@ public class TimeFragment extends Fragment {
     private RecyclerView rvSchedule;
     private List<Booking> bookingList;
     private ScheduleAdapter scheduleAdapter;
+    private LocalBroadcastManager localBroadcastManager;
     private GridLayoutManager gridLayoutManagerSchedule;
-    String schedule;
+
 
     static TimeFragment instance;
     public static TimeFragment getInstance(){
@@ -146,8 +150,12 @@ public class TimeFragment extends Fragment {
                             scheduleAdapter.notifyDataSetChanged();
                             scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
                                 @Override
-                                public void onClick(String strSchedule) {
-                                    schedule = strSchedule;
+                                public void onClick(String strSchedule,String date) {
+                                    Intent intent = new Intent();
+                                    intent.setAction("Time Broadcast");
+                                    intent.putExtra("timeBook",strSchedule);
+                                    intent.putExtra("dateBook",date);
+                                    localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
                                 }
                             });
 

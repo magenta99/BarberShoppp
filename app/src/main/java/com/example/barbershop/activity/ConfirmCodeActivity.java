@@ -80,6 +80,9 @@ public class ConfirmCodeActivity extends BaseActivity {
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 showMessegeWarning("Mã không đúng");
+                            } else {
+                                showMessegeSuccess("Đăng nhập thành công");
+
                             }
                         }
                     }

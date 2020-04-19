@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.authenticationsms.R;
@@ -22,10 +23,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     List<Location> locationList;
     Context context;
+    LocalBroadcastManager localBroadcastManager;
 
     public LocationAdapter(List<Location> locationList, Context context) {
         this.locationList = locationList;
         this.context = context;
+        localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     onItemClickListner onItemClickListner;
@@ -60,6 +63,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         locationHolder.tvLocation.setText(locationHolder.location.getAddressLocation());
         locationHolder.tvDetailLocation.setText(locationHolder.location.getDistrictDetailLocation());
 
+
         locationHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +73,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
