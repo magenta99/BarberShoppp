@@ -9,13 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.adapter.LocationAdapter;
+import com.example.barbershop.model.Location;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import es.dmoral.toasty.Toasty;
 
 public class ConfirmFragment extends Fragment {
     static ConfirmFragment instance;
@@ -47,7 +62,7 @@ public class ConfirmFragment extends Fragment {
         return view;
     }
 
-    private void initView(View view){
+    private void initView(View view) {
         locationBooking = view.findViewById(R.id.locationBooking);
         timeBooking = view.findViewById(R.id.timeBooking);
         dateBooking = view.findViewById(R.id.dateBooking);
@@ -65,11 +80,13 @@ public class ConfirmFragment extends Fragment {
                     String dateSchedule = intent.getStringExtra("dateSchedule");
                     String stylistSchedule = intent.getStringExtra("stylistSchedule");
                     String serviceSchedule = intent.getStringExtra("serviceSchedule");
+                    String idSchedule = intent.getStringExtra("idSchedule");
                     locationBooking.setText(locationSchedule);
                     timeBooking.setText(timeSchedule);
-                    dateBooking.setText(dateSchedule+"/04");
+                    dateBooking.setText(dateSchedule + "/04");
                     stylistBooking.setText(stylistSchedule);
                     serviceBooking.setText(serviceSchedule);
+
                 }
             }
         };
@@ -83,8 +100,6 @@ public class ConfirmFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
-    private void sendDataToServer(){
 
-    }
 
 }

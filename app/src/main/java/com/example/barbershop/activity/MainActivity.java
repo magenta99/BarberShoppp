@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity {
                 if (phoneNumber.isEmpty()) {
                     showMessegeWarning("Vui lòng nhập số điện thoại");
                 } else {
+
                     AndroidNetworking.post("http://barber123.herokuapp.com/sendOTP")
                             .addBodyParameter("phone", phoneNumber)
                             .setTag("test")
@@ -62,12 +63,12 @@ public class MainActivity extends BaseActivity {
                                 public void onResponse(JSONObject response) {
                                     try {
                                         String status = response.getString("status");
-                                        Log.d("sendOtp", status);
-                                        if (Integer.parseInt(status) == 0) {
+                                        if (status == "0") {
+                                            Log.d("sendOtp", response.toString());
                                             String id = response.getString("request_id");
                                             Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
                                             Bundle bundle = new Bundle();
-                                            bundle.putString("phoneNumber", phoneNumber);
+                                            bundle.putString("phoneNumber", "84" + phoneNumber);
                                             bundle.putString("request_id", id);
                                             intent.putExtras(bundle);
                                             startActivity(intent);
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity {
                                     } catch (JSONException e) {
                                         Log.d("Error", "" + e);
                                     }
+
                                 }
 
                                 @Override

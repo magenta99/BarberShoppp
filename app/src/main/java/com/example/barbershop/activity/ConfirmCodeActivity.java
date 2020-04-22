@@ -36,7 +36,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private PinView pvCode;
     private Button btnContinue;
     private TextView tvResendCode;
-    //    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
 //    String codeSent;
     String phoneNumber;
     String requestId;
@@ -47,7 +47,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_code);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
-        //  mAuth = FirebaseAuth.getInstance();
+      //  mAuth = FirebaseAuth.getInstance();
         pvCode = findViewById(R.id.pvCode);
         btnContinue = findViewById(R.id.btnContinue);
         tvResendCode = findViewById(R.id.tvResendCode);
@@ -59,6 +59,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         phoneNumber = phone;
         requestId = id;
         tvPhoneNumber.setText("+84" + phoneNumber);
+        tvPhoneNumber.setText(phoneNumber);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +90,7 @@ public class ConfirmCodeActivity extends BaseActivity {
                         try {
                             Log.d("checkOtp", response.toString());
                             String status = response.getString("status");
-                            if (Integer.parseInt(status) == 0) {
+                            if (status == "0") {
                                 Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 saveUsername(phone);
@@ -122,7 +123,7 @@ public class ConfirmCodeActivity extends BaseActivity {
                         try {
                             Log.d("confirmOtp", response.toString());
                             String status = response.getString("status");
-                            if (Integer.parseInt(status) == 0) {
+                            if (status == "0") {
                                 showMessegeSuccess("Mã đã gửi lại thành công");
                                 String id = response.getString("request_id");
                                 requestId = id;

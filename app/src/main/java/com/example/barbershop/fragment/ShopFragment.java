@@ -106,6 +106,7 @@ public class ShopFragment extends Fragment {
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 productList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct));
                             }
+                            Toast.makeText(getContext(), ""+productList.size(), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

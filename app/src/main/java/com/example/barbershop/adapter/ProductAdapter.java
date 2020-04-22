@@ -174,7 +174,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
                                         @Override
                                         public void onError(ANError error) {
-                                            // handle error
                                         }
                                     });
                             Toasty.success(context, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();

@@ -202,12 +202,12 @@ public class BookFragment extends Fragment {
                             rvSchedule.setLayoutManager(gridLayoutManagerSchedule);
                             rvSchedule.setAdapter(scheduleAdapter);
                             scheduleAdapter.notifyDataSetChanged();
-                            scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
-                                @Override
-                                public void onClick(String strSchedule,String stb) {
-                                    schedule = strSchedule;
-                                }
-                            });
+//                            scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
+//                                @Override
+//                                public void onClick(String strSchedule,String stb) {
+//                                    schedule = strSchedule;
+//                                }
+//                            });
 
                         } catch (JSONException e) {
                             Log.d("Error", "" + e);

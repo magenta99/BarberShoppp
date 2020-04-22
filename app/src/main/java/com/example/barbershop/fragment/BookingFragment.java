@@ -19,35 +19,31 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
-import com.example.barbershop.activity.BaseActivityFrg;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.HomeActivity;
 import com.example.barbershop.model.NonSwipeViewPager;
 import com.example.barbershop.adapter.MyViewPagerAdapter;
 import com.shuhart.stepview.StepView;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import es.dmoral.toasty.Toasty;
 
-public class BookingFragment extends BaseActivityFrg {
-    StepView stepView;
-    NonSwipeViewPager viewPagerStep;
-    Button btn_back;
-    Button btn_next;
-    int number = 0;
-    int step = 0;
-    private BroadcastReceiver broadcastReceiver;
-    private LocalBroadcastManager localBroadcastManager;
-    String locationSchedule = "";
-    String dateSchedule = "";
-    String timeSchedule = "";
-    String nameStylistSchedule = "";
-    String nameServiceSchedule = "";
-    String idSchedule = "";
+public class BookingFragment extends BaseFragment {
+    private StepView stepView;
+    private NonSwipeViewPager viewPagerStep;
+    private Button btn_back;
+    private Button btn_next;
+    private int number = 0;
+    private int step = 0;
+    private  BroadcastReceiver broadcastReceiver;
+    private  LocalBroadcastManager localBroadcastManager;
+    private String locationSchedule = "";
+    private String dateSchedule = "";
+    private String timeSchedule = "";
+    private String nameStylistSchedule = "";
+    private String nameServiceSchedule = "";
+    private String idSchedule = "";
 
     @Nullable
     @Override
@@ -164,7 +160,8 @@ public class BookingFragment extends BaseActivityFrg {
                     viewPagerStep.setCurrentItem(step);
                     sendDataToFragment();
                     showMessage(idSchedule);
-                    sendDataToBooking(idSchedule);
+                    Log.d("idSchedule",idSchedule);
+                    sendDataToBooking();
                 }
             }
         });
@@ -192,20 +189,20 @@ public class BookingFragment extends BaseActivityFrg {
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    private void sendDataToBooking(String idSchedule){
+    private void sendDataToBooking(){
         AndroidNetworking.post("https://api.tradenowvn.com/v1/other/haircut-order")
-                .addBodyParameter("id", idSchedule)
+                .addQueryParameter("id","5e94a5145f07dc115a378b11")
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        // do anything with response
                     }
-
                     @Override
                     public void onError(ANError error) {
-                        Log.e("Lỗi",""+  error.getMessage());
+                        Log.e("Lỗi",error.getMessage());
                     }
                 });
 

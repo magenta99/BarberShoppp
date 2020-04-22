@@ -142,5 +142,4 @@
         android:id="@+id/rvProduct"
         android:layout_margin="4dp"/>
 
-
 </LinearLayout>

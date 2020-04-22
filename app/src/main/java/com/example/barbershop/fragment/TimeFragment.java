@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +22,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ScheduleAdapter;
 import com.example.barbershop.model.Booking;
 
@@ -39,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class TimeFragment extends Fragment {
+public class TimeFragment extends BaseFragment {
     private TextView dateBook1;
     private TextView dateBook2;
     private CardView cardToday;
@@ -150,9 +149,10 @@ public class TimeFragment extends Fragment {
                             scheduleAdapter.notifyDataSetChanged();
                             scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
                                 @Override
-                                public void onClick(String strSchedule,String date) {
+                                public void onClick(String idBook,String strSchedule,String date) {
                                     Intent intent = new Intent();
                                     intent.setAction("Time Broadcast");
+                                    intent.putExtra("idBook",idBook);
                                     intent.putExtra("timeBook",strSchedule);
                                     intent.putExtra("dateBook",date);
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
