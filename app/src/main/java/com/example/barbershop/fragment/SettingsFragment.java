@@ -3,7 +3,9 @@ package com.example.barbershop.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BSTActivity;
+import com.example.barbershop.activity.ConfirmCodeActivity;
 import com.example.barbershop.activity.SalonActivity;
 import com.example.barbershop.activity.TVActivity;
 import com.example.barbershop.activity.LoginActivity;
@@ -62,6 +65,8 @@ public class SettingsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(getContext(), LoginActivity.class));
                         getActivity().finish();
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("USER", MODE_PRIVATE);
+                        sharedPreferences.edit().remove("NAME").commit();
                     }
                 });
                 AlertDialog dialog = mBuilder.create();
@@ -106,7 +111,7 @@ public class SettingsFragment extends Fragment {
 
     private String getRootUsername() {
         String name;
-        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", null);
+        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", "");
         return name;
     }
 

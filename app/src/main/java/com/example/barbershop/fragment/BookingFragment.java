@@ -10,25 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
-import com.example.barbershop.activity.BaseFragment;
+import com.example.barbershop.activity.BaseActivityFrg;
 import com.example.barbershop.activity.HomeActivity;
 import com.example.barbershop.model.NonSwipeViewPager;
 import com.example.barbershop.adapter.MyViewPagerAdapter;
@@ -42,7 +33,7 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
-public class BookingFragment extends BaseFragment {
+public class BookingFragment extends BaseActivityFrg {
     StepView stepView;
     NonSwipeViewPager viewPagerStep;
     Button btn_back;

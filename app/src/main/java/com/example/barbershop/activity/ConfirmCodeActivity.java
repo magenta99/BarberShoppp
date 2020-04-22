@@ -58,7 +58,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         String id = bundle.getString("request_id", "");
         phoneNumber = phone;
         requestId = id;
-        tvPhoneNumber.setText("+84"+phoneNumber);
+        tvPhoneNumber.setText("+84" + phoneNumber);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,10 +142,14 @@ public class ConfirmCodeActivity extends BaseActivity {
                 });
     }
 
-    private void saveUsername(String phoneNumber) {
+    public void saveUsername(String phoneNumber) {
         SharedPreferences sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("NAME", "+84"+phoneNumber);
+        if (phoneNumber.isEmpty()) {
+            edit.putString("NAME", "");
+        } else {
+            edit.putString("NAME", "+84" + phoneNumber);
+        }
         edit.apply();
     }
 
