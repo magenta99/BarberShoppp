@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         btnBookNow1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BookFragment nextFrag= new BookFragment();
+                BookingFragment nextFrag= new BookingFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_layout, nextFrag)
                         .addToBackStack(null)
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
         btnBookNow2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BookFragment nextFrag= new BookFragment();
+                BookingFragment nextFrag= new BookingFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_layout, nextFrag)
                         .addToBackStack(null)

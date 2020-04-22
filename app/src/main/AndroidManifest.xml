@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
 
-
-
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -18,17 +16,20 @@
         android:theme="@style/Theme.AppCompat">
 
 
-        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+        <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FACEBOOK_APP_ID" />
-        <meta-data android:name="com.facebook.accountkit.ClientToken"
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
-        <activity
-            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
 
-        <activity android:name="com.example.barbershop.activity.TVActivity"
+        <activity
+            android:name="com.example.barbershop.activity.TVActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name="com.example.barbershop.activity.SalonActivity"
@@ -53,12 +54,13 @@
             android:name="com.example.barbershop.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         </activity>
         <activity
             android:name="com.example.barbershop.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBarber" >
+            android:theme="@style/AppThemeBarber">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

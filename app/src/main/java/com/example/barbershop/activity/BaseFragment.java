@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import es.dmoral.toasty.Toasty;
 
-public class BaseActivityFrg extends Fragment {
+public class BaseFragment extends Fragment {
 
     public void startNewActivity(Class target){
         Intent intent = new Intent(getContext(),target);

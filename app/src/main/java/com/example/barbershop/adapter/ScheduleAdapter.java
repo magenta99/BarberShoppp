@@ -36,7 +36,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     }
 
     public interface onItemClickListner{
-        void onClick(String str1,String str2);
+        void onClick(String str1,String str2,String str3);
     }
 
     @NonNull
@@ -72,7 +72,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             public void onClick(View view) {
                 selectedPosition = position;
                 notifyDataSetChanged();
-                onItemClickListner.onClick(scheduleHolder.booking.getTime(),scheduleHolder.booking.getDate());
+                onItemClickListner.onClick(scheduleHolder.booking.getId(),scheduleHolder.booking.getTime(),scheduleHolder.booking.getDate());
             }
         });
     }

@@ -45,6 +45,7 @@ public class StylistServiceFragment extends Fragment {
     public LocalBroadcastManager localBroadcastManager;
 
     static StylistServiceFragment instance;
+
     public static StylistServiceFragment getInstance() {
         if (instance == null) {
             instance = new StylistServiceFragment();
@@ -142,12 +143,12 @@ public class StylistServiceFragment extends Fragment {
                             serviceAdapter.notifyDataSetChanged();
                             serviceAdapter.setOnItemClickListner(new ServiceAdapter.onItemClickListner() {
                                 @Override
-                                public void onClick(final String strService,String price) {
+                                public void onClick(final String strService, String price) {
                                     //Gửi data sang BookingFragment
                                     Intent intent = new Intent();
                                     intent.setAction("Service Broadcast");
                                     intent.putExtra("nameService", strService);
-                                    intent.putExtra("priceSevice",price);
+                                    intent.putExtra("priceSevice", price);
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
 
                                 }
@@ -163,6 +164,5 @@ public class StylistServiceFragment extends Fragment {
                     }
                 });
     }
-
 
 }
