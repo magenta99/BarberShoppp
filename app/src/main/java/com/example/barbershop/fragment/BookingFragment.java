@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +14,35 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.authenticationsms.R;
-import com.example.barbershop.activity.BaseActivityFrg;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.HomeActivity;
 import com.example.barbershop.model.NonSwipeViewPager;
 import com.example.barbershop.adapter.MyViewPagerAdapter;
 import com.shuhart.stepview.StepView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class BookingFragment extends BaseActivityFrg {
+import es.dmoral.toasty.Toasty;
+
+public class BookingFragment extends BaseFragment {
     StepView stepView;
     NonSwipeViewPager viewPagerStep;
     Button btn_back;
@@ -41,6 +56,7 @@ public class BookingFragment extends BaseActivityFrg {
     String timeSchedule = "";
     String nameStylistSchedule = "";
     String nameServiceSchedule = "";
+    String idSchedule = "";
 
     @Nullable
     @Override
@@ -68,10 +84,12 @@ public class BookingFragment extends BaseActivityFrg {
                     String location = intent.getStringExtra("location");
                     locationSchedule = location;
                 } else if (intent.getAction().equals("Time Broadcast")) {
+                    String idBook = intent.getStringExtra("idBook");
                     String timeBook = intent.getStringExtra("timeBook");
                     String dateBook = intent.getStringExtra("dateBook");
                     timeSchedule = timeBook;
                     dateSchedule = dateBook;
+                    idSchedule = idBook;
                 } else if (intent.getAction().equals("Stylist Broadcast")) {
                     String nameStylist = intent.getStringExtra("nameStylist");
                     nameStylistSchedule = nameStylist;
@@ -153,7 +171,9 @@ public class BookingFragment extends BaseActivityFrg {
                 } else if (step == 2 && timeSchedule != "" && nameServiceSchedule != "") {
                     step++;
                     viewPagerStep.setCurrentItem(step);
-                    sendData();
+                    sendDataToFragment();
+                    showMessage(idSchedule);
+                    sendDataToBooking(idSchedule);
                 }
             }
         });
@@ -169,7 +189,7 @@ public class BookingFragment extends BaseActivityFrg {
         stepView.setSteps(stepList);
     }
 
-    private void sendData(){
+    private void sendDataToFragment(){
         Intent intent = new Intent();
         intent.setAction("Confirmation");
         intent.putExtra("locationSchedule",locationSchedule);
@@ -177,8 +197,29 @@ public class BookingFragment extends BaseActivityFrg {
         intent.putExtra("dateSchedule",dateSchedule);
         intent.putExtra("stylistSchedule",nameStylistSchedule);
         intent.putExtra("serviceSchedule",nameServiceSchedule);
+        intent.putExtra("idSchedule",idSchedule);
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
+
+    private void sendDataToBooking(String idSchedule){
+        AndroidNetworking.post("https://api.tradenowvn.com/v1/other/haircut-order")
+                .addBodyParameter("id", idSchedule)
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        Log.e("Lỗi",""+  error.getMessage());
+                    }
+                });
+
+    }
+
 
 
     @Override
@@ -186,4 +227,7 @@ public class BookingFragment extends BaseActivityFrg {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
-}
+
+
+    }
+
