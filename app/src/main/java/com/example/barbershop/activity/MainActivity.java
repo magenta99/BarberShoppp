@@ -62,14 +62,19 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
-                                        Log.d("sendOtp",response.toString());
-                                        String id = response.getString("request_id");
-                                        Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("phoneNumber", "84"+phoneNumber);
-                                        bundle.putString("request_id",id);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
+                                        String status = response.getString("status");
+                                        if (status == "0") {
+                                            Log.d("sendOtp", response.toString());
+                                            String id = response.getString("request_id");
+                                            Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("phoneNumber", "84" + phoneNumber);
+                                            bundle.putString("request_id", id);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                        } else {
+                                            showMessegeWarning("Vui lòng kiểm tra lại");
+                                        }
                                     } catch (JSONException e) {
                                         Log.d("Error", "" + e);
                                     }
