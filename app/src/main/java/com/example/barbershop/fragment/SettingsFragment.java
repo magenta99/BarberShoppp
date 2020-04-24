@@ -3,6 +3,7 @@ package com.example.barbershop.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,9 @@ public class SettingsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(getContext(), LoginActivity.class));
                         getActivity().finish();
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("USER", MODE_PRIVATE);
+                        sharedPreferences.edit().remove("PHONE").commit();
+
                     }
                 });
                 AlertDialog dialog = mBuilder.create();
@@ -106,7 +110,7 @@ public class SettingsFragment extends Fragment {
 
     private String getRootUsername() {
         String name;
-        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", null);
+        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", "");
         return name;
     }
 

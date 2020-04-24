@@ -29,8 +29,14 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    Intent obj = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(obj);
+                    String phone = getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", "");
+                    if(phone.isEmpty()){
+                        Intent obj = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(obj);
+                    }else{
+                        Intent obj = new Intent(SplashActivity.this, HomeActivity.class);
+                        startActivity(obj);
+                    }
                 }
             }
         };

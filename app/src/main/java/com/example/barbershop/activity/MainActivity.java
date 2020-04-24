@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
                                 public void onResponse(JSONObject response) {
                                     try {
                                         String status = response.getString("status");
-                                        if (status == "0") {
+                                        if (Integer.parseInt(status) == 0) {
                                             Log.d("sendOtp", response.toString());
                                             String id = response.getString("request_id");
                                             Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
