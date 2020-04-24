@@ -36,7 +36,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private PinView pvCode;
     private Button btnContinue;
     private TextView tvResendCode;
-//    private FirebaseAuth mAuth;
+    //    private FirebaseAuth mAuth;
 //    String codeSent;
     String phoneNumber;
     String requestId;
@@ -47,7 +47,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_code);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
-      //  mAuth = FirebaseAuth.getInstance();
+        //  mAuth = FirebaseAuth.getInstance();
         pvCode = findViewById(R.id.pvCode);
         btnContinue = findViewById(R.id.btnContinue);
         tvResendCode = findViewById(R.id.tvResendCode);
@@ -58,7 +58,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         String id = bundle.getString("request_id", "");
         phoneNumber = phone;
         requestId = id;
-        tvPhoneNumber.setText(phoneNumber);
+        tvPhoneNumber.setText("+84" + phoneNumber);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +145,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private void saveUsername(String phoneNumber) {
         SharedPreferences sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("PHONE", phoneNumber);
+        edit.putString("PHONE", "+84" + phoneNumber);
         edit.apply();
     }
 
