@@ -6,6 +6,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.authenticationsms.R;
+import com.example.barbershop.fragment.WaxFragment;
+
 import es.dmoral.toasty.Toasty;
 
 public class BaseFragment extends Fragment {
@@ -14,6 +17,8 @@ public class BaseFragment extends Fragment {
         Intent intent = new Intent(getContext(),target);
         startActivity(intent);
     }
+
+
 
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

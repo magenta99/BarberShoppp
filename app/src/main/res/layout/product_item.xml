@@ -10,20 +10,24 @@
     <LinearLayout
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imgProduct"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
             android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/tvNameProduct"
             android:layout_width="match_parent"
+            android:textColor="@color/colorBlack"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="left"
+            android:textSize="13dp"
             android:text="iPad WiFi 128GB New 2018 Pink" />
 
         <LinearLayout
@@ -35,6 +39,7 @@
                 android:id="@+id/tvPriceProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="9.990.000"
                 android:textColor="@color/colorRed"
                 android:textStyle="bold" />
@@ -52,7 +57,7 @@
         <Button
             android:id="@+id/btnBuyNow"
             android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:layout_marginRight="6dp"

@@ -1,145 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/mainLayout"
+    android:fillViewport="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="BARBER SHOP"
-            android:textColor="@color/colorBlack"
-            android:textStyle="bold"
-            android:textSize="15dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xem giỏ hàng"
-            android:textSize="10dp"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="28dp"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="center"/>
-
-        <ImageButton
-            android:layout_width="20dp"
-            android:id="@+id/btnCart"
-            android:layout_marginTop="8dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="38dp"
-            android:background="@drawable/shoppingcart"/>
-
-        <TextView
-            android:layout_marginTop="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/tvProductCart"
-            android:gravity="center"
-            android:background="@drawable/circle_red"
-            android:layout_marginRight="28dp"
-            android:textColor="@color/colorWhite"
-            android:layout_alignParentEnd="true"/>
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="4dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Tạo kiểu tóc"
-                android:paddingStart="12dp"
-                android:layout_marginEnd="8dp"
-                android:paddingEnd="12dp"
-                android:background="@drawable/button_gray"
-                android:textColor="@color/colorBlack"
-                android:textAllCaps="false"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Chăm sóc tóc"
-                android:layout_marginEnd="8dp"
-
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:background="@drawable/button_gray"
-                android:textColor="@color/colorBlack"
-                android:textAllCaps="false"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Chăm sóc râu"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:background="@drawable/button_gray"
-                android:textColor="@color/colorBlack"
-                android:textAllCaps="false"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Chăm sóc da mặt"
-                android:layout_marginEnd="8dp"
-
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:background="@drawable/button_gray"
-                android:textColor="@color/colorBlack"
-                android:textAllCaps="false"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Đồ lót nam"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:background="@drawable/button_gray"
-                android:textColor="@color/colorBlack"
-                android:textAllCaps="false"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <ViewFlipper
-        android:id="@+id/vpShopSlider"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvProduct"
-        android:layout_margin="4dp"/>
+        android:orientation="vertical">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ViewFlipper
+                android:id="@+id/vpShopSlider"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_centerHorizontal="true" />
+
+            <ImageButton
+                android:id="@+id/btnCart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="38dp"
+                android:background="@drawable/cart" />
+
+            <TextView
+                android:id="@+id/tvProductCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="28dp"
+                android:background="@drawable/circle_red"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/colorWhite" />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="5dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TableRow android:minHeight="110dp">
+
+                    <LinearLayout
+                        android:id="@+id/llWax"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/wax_shop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sáp tóc"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="11dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llCleanser"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/cleanser_shop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sữa rửa mặt"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="11dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llUnderwear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/underwear_shop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đồ lót"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="11dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:id="@+id/llBeard"
+                        android:orientation="vertical">
+
+                        <ImageView
+
+                            android:layout_width="45dp"
+                            android:layout_height="47dp"
+                            android:layout_marginTop="2dp"
+                            android:src="@drawable/beard_shop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cạo râu"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="11dp" />
+
+                    </LinearLayout>
+
+
+                </TableRow>
+
+            </TableLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Spinner
+            android:id="@+id/spnSapXepIpad"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProduct"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

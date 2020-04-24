@@ -14,53 +14,78 @@
         android:layout_height="match_parent"
         android:stretchColumns="1">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@drawable/backgroundorange"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/user" />
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:background="@drawable/backgroundorange"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Barber"
-                        android:textColor="@color/colorBlack" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thành viên thường" />
-
-                    <Button
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="-3dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/button_white"
-                        android:text="Nâng cấp Barber Member"
-                        android:textSize="10dp" />
                 </LinearLayout>
 
-            </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="330dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="4dp"
+                    app:cardCornerRadius="7dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/user" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lê Huy Anh"
+                                android:textColor="@color/colorBlack" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thành viên thường" />
+
+                            <Button
+                                android:layout_width="160dp"
+                                android:layout_height="30dp"
+                                android:layout_marginStart="-3dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="4dp"
+                                android:background="@drawable/button_gold"
+                                android:text="Nâng cấp Barber Member"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
 
             <ViewFlipper
@@ -68,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"></ViewFlipper>
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,8 +150,8 @@
                                     android:textStyle="bold" />
 
                                 <Button
-                                    android:layout_width="0dp"
                                     android:id="@+id/btnBookNow1"
+                                    android:layout_width="0dp"
                                     android:layout_height="30dp"
                                     android:layout_marginEnd="8dp"
                                     android:layout_weight="0.45"
@@ -175,8 +200,8 @@
                                     android:textStyle="bold" />
 
                                 <Button
-                                    android:layout_width="0dp"
                                     android:id="@+id/btnBookNow2"
+                                    android:layout_width="0dp"
                                     android:layout_height="30dp"
                                     android:layout_marginEnd="8dp"
                                     android:layout_weight="0.45"

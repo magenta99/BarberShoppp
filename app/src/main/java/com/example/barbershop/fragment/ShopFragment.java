@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -22,6 +23,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.CartActivity;
 import com.example.barbershop.adapter.ProductAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
@@ -34,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopFragment extends Fragment {
+public class ShopFragment extends BaseFragment {
     private ProductAdapter productAdapter;
     private GridLayoutManager gridLayoutManager;
     String url = "https://barber-shopp.herokuapp.com/result";
@@ -44,6 +46,13 @@ public class ShopFragment extends Fragment {
     private ImageButton btnCart;
     private TextView tvProductCart;
     private ProductCartDAO productCartDAO;
+    private LinearLayout llWax;
+    private LinearLayout llCleanser;
+    private LinearLayout llUnderwear;
+    private LinearLayout llBeard;
+
+
+
 
     @Nullable
     @Override
@@ -58,6 +67,10 @@ public class ShopFragment extends Fragment {
     }
 
     private void init(View view) {
+        llWax = view.findViewById(R.id.llWax);
+        llCleanser = view.findViewById(R.id.llCleanser);
+        llUnderwear = view.findViewById(R.id.llUnderwear);
+        llBeard = view.findViewById(R.id.llBeard);
         productCartDAO = new ProductCartDAO(getContext());
         tvProductCart = view.findViewById(R.id.tvProductCart);
         btnCart = view.findViewById(R.id.btnCart);
@@ -70,17 +83,22 @@ public class ShopFragment extends Fragment {
         });
         viewFlipper = view.findViewById(R.id.vpShopSlider);
         rvProduct = view.findViewById(R.id.rvProduct);
+
+        //Code start các màn hình chuyên mục sản phẩm
+        startNewFragment();
+        //Load sản phẩm
+        loadProducts();
         productList = new ArrayList<>();
         productAdapter = new ProductAdapter(getContext(), productList);
-        gridLayoutManager = new GridLayoutManager(getContext(),2);
+        gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
         rvProduct.setAdapter(productAdapter);
         rvProduct.setLayoutManager(gridLayoutManager);
-        rvProduct.hasFixedSize();
+        rvProduct.setHasFixedSize(true);
         rvProduct.setNestedScrollingEnabled(false);
+        rvProduct.scheduleLayoutAnimation();
         productAdapter.notifyDataSetChanged();
-        loadProducts();
+        gridLayoutManager.setAutoMeasureEnabled(true);
         tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
-
     }
 
 
@@ -90,7 +108,7 @@ public class ShopFragment extends Fragment {
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
@@ -106,7 +124,6 @@ public class ShopFragment extends Fragment {
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 productList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct));
                             }
-                            Toast.makeText(getContext(), ""+productList.size(), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,4 +146,47 @@ public class ShopFragment extends Fragment {
         viewFlipper.setInAnimation(getContext(), android.R.anim.fade_in);
     }
 
+
+    private void startNewFragment(){
+        llWax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WaxFragment nextFrag= new WaxFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        llBeard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BeardFragment nextFrag= new BeardFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        llCleanser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CleanserFragment nextFrag= new CleanserFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        llUnderwear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UnderwearFragment nextFrag= new UnderwearFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
 }
