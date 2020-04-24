@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
                                             String id = response.getString("request_id");
                                             Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
                                             Bundle bundle = new Bundle();
-                                            bundle.putString("phoneNumber", "84" + phoneNumber);
+                                            bundle.putString("phoneNumber",  phoneNumber);
                                             bundle.putString("request_id", id);
                                             intent.putExtras(bundle);
                                             startActivity(intent);
