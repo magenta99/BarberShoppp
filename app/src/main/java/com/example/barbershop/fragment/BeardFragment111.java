@@ -26,30 +26,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShampooFragment extends BaseFragment {
-    private List<Product> shampooList;
+public class BeardFragment111 extends BaseFragment {
+    private List<Product> beardList;
     private ProductAdapter productAdapter;
-    private RecyclerView rvShampoo;
+    private RecyclerView rvBread;
     private GridLayoutManager gridLayoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.shampoo_fragment, container, false);
+        View view = inflater.inflate(R.layout.beard_fragment, container, false);
         initView(view);
-
         return view;
     }
 
     private void initView(View view){
-        shampooList = new ArrayList<>();
-        rvShampoo = view.findViewById(R.id.rvShampoo);
-        loadShampooProduct();
+        beardList = new ArrayList<>();
+        rvBread = view.findViewById(R.id.rvBread);
+        loadBeardProduct();
     }
 
-    private void loadShampooProduct() {
+    private void loadBeardProduct() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
-                .addPathParameter("typeProduct", "Shampoo")
+                .addPathParameter("typeProduct", "Beard")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
@@ -68,15 +67,15 @@ public class ShampooFragment extends BaseFragment {
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 String ratingProduct = jsonObject.getString("ratingProduct");
-                                shampooList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                beardList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
                             }
-                            productAdapter = new ProductAdapter(getContext(), shampooList);
+                            productAdapter = new ProductAdapter(getContext(), beardList);
                             gridLayoutManager = new GridLayoutManager(getContext(),2);
-                            rvShampoo.setAdapter(productAdapter);
-                            rvShampoo.setLayoutManager(gridLayoutManager);
-                            rvShampoo.setHasFixedSize(true);
-                            rvShampoo.setNestedScrollingEnabled(false);
-                            rvShampoo.scheduleLayoutAnimation();
+                            rvBread.setAdapter(productAdapter);
+                            rvBread.setLayoutManager(gridLayoutManager);
+                            rvBread.setHasFixedSize(true);
+                            rvBread.setNestedScrollingEnabled(false);
+                            rvBread.scheduleLayoutAnimation();
                             productAdapter.notifyDataSetChanged();
                             gridLayoutManager.setAutoMeasureEnabled(true);
                         } catch (JSONException e) {
@@ -91,5 +90,4 @@ public class ShampooFragment extends BaseFragment {
                 });
 
     }
-
 }
