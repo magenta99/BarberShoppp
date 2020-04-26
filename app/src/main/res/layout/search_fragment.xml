@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayyy"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/colorGold"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:background="@drawable/ic_keyboard_backspace_black_24dp"
+                android:layout_weight="0.7" />
+
+            <AutoCompleteTextView
+                android:id="@+id/actvNameProduct"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="8"
+                android:background="@drawable/button_search_gray"
+                android:gravity="center"
+                android:hint="Nhập sản phẩm muốn tìm kiếm"
+                android:textColor="@color/colorBlack"
+                android:textSize="12dp"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/btnSearchProduct"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:background="@drawable/search"
+                android:layout_weight="0.8"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</android.widget.LinearLayout>

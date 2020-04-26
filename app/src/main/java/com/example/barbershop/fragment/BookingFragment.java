@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -88,7 +90,6 @@ public class BookingFragment extends BaseFragment {
         };
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filter);
 
-
         setupStepView();
 
         viewPagerStep.setAdapter(new MyViewPagerAdapter(getFragmentManager()));
@@ -120,6 +121,7 @@ public class BookingFragment extends BaseFragment {
                     btn_back.setBackgroundResource(R.color.colorBlack);
                     btn_back.setTextColor(getResources().getColor(R.color.colorGold));
                 }
+                showMessage(""+i);
             }
 
             @Override

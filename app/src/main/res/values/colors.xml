@@ -11,6 +11,7 @@
     <color name="colorPreMain">#E69A00</color>
     <color name="colorBlue">#486FEC</color>
     <color name="colorGrayyy">#f2f2f2</color>
+    <color name="colorGrayBold">#AFAFAF</color>
     <color name="colorGreen">#34CE3C</color>
     <color name="colorUnselected">#DDDDDD</color>
 

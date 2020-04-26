@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,7 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.CartActivity;
-import com.example.barbershop.adapter.ProductAdapter;
+import com.example.barbershop.adapter.ProductMainAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.Product;
 
@@ -37,12 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopFragment extends BaseFragment {
-    private ProductAdapter productAdapter;
+    private ProductMainAdapter productMainAdapter;
     private GridLayoutManager gridLayoutManager;
     String url = "https://barber-shopp.herokuapp.com/result";
     private ViewFlipper viewFlipper;
-    private RecyclerView rvProduct;
-    private List<Product> productList;
+    private RecyclerView rvWaxMain;
+    private RecyclerView rvShampooMain;
+    private List<Product> waxList;
+    private List<Product> shampooList;
     private ImageButton btnCart;
     private TextView tvProductCart;
     private ProductCartDAO productCartDAO;
@@ -50,9 +51,7 @@ public class ShopFragment extends BaseFragment {
     private LinearLayout llCleanser;
     private LinearLayout llUnderwear;
     private LinearLayout llBeard;
-
-
-
+    private Button btnMallSearch;
 
     @Nullable
     @Override
@@ -67,11 +66,14 @@ public class ShopFragment extends BaseFragment {
     }
 
     private void init(View view) {
+        btnMallSearch = view.findViewById(R.id.btnMallSearch);
         llWax = view.findViewById(R.id.llWax);
         llCleanser = view.findViewById(R.id.llCleanser);
         llUnderwear = view.findViewById(R.id.llUnderwear);
         llBeard = view.findViewById(R.id.llBeard);
         productCartDAO = new ProductCartDAO(getContext());
+        waxList = new ArrayList<>();
+        shampooList = new ArrayList<>();
         tvProductCart = view.findViewById(R.id.tvProductCart);
         btnCart = view.findViewById(R.id.btnCart);
         btnCart.setOnClickListener(new View.OnClickListener() {
@@ -82,28 +84,21 @@ public class ShopFragment extends BaseFragment {
             }
         });
         viewFlipper = view.findViewById(R.id.vpShopSlider);
-        rvProduct = view.findViewById(R.id.rvProduct);
+        rvWaxMain = view.findViewById(R.id.rvWaxMain);
+        rvShampooMain = view.findViewById(R.id.rvShampooMain);
 
         //Code start các màn hình chuyên mục sản phẩm
         startNewFragment();
         //Load sản phẩm
-        loadProducts();
-        productList = new ArrayList<>();
-        productAdapter = new ProductAdapter(getContext(), productList);
-        gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
-        rvProduct.setAdapter(productAdapter);
-        rvProduct.setLayoutManager(gridLayoutManager);
-        rvProduct.setHasFixedSize(true);
-        rvProduct.setNestedScrollingEnabled(false);
-        rvProduct.scheduleLayoutAnimation();
-        productAdapter.notifyDataSetChanged();
-        gridLayoutManager.setAutoMeasureEnabled(true);
+        loadWaxProduct();
+        loadShampooProduct();
         tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
+
     }
 
 
-    private void loadProducts() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/{typeProduct}")
+    private void loadWaxProduct() {
+        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -122,8 +117,62 @@ public class ShopFragment extends BaseFragment {
                                 String priceProduct = jsonObject.getString("priceProduct");
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
-                                productList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct));
+                                String ratingProduct = jsonObject.getString("ratingProduct");
+                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
                             }
+                            productMainAdapter = new ProductMainAdapter(getContext(), waxList);
+                            gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
+                            rvWaxMain.setAdapter(productMainAdapter);
+                            rvWaxMain.setLayoutManager(gridLayoutManager);
+                            rvWaxMain.setHasFixedSize(true);
+                            rvWaxMain.setNestedScrollingEnabled(false);
+                            rvWaxMain.scheduleLayoutAnimation();
+                            productMainAdapter.notifyDataSetChanged();
+                            gridLayoutManager.setAutoMeasureEnabled(true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                    }
+                });
+
+    }
+    private void loadShampooProduct() {
+        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
+                .addPathParameter("typeProduct", "Shampoo")
+                .addQueryParameter("limit", "3")
+                .addHeaders("token", "1234")
+                .setTag("test")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String idProduct = jsonObject.getString("_id");
+                                String imageProduct = jsonObject.getString("imageProduct");
+                                String nameProduct = jsonObject.getString("nameProduct");
+                                String priceProduct = jsonObject.getString("priceProduct");
+                                String typeProduct = jsonObject.getString("typeProduct");
+                                String descriptionProduct = jsonObject.getString("descriptionProduct");
+                                String ratingProduct = jsonObject.getString("ratingProduct");
+                                shampooList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                            }
+                            productMainAdapter = new ProductMainAdapter(getContext(), shampooList);
+                            gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
+                            rvShampooMain.setAdapter(productMainAdapter);
+                            rvShampooMain.setLayoutManager(gridLayoutManager);
+                            rvShampooMain.setHasFixedSize(true);
+                            rvShampooMain.setNestedScrollingEnabled(false);
+                            rvShampooMain.scheduleLayoutAnimation();
+                            productMainAdapter.notifyDataSetChanged();
+                            gridLayoutManager.setAutoMeasureEnabled(true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -181,7 +230,18 @@ public class ShopFragment extends BaseFragment {
         llUnderwear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UnderwearFragment nextFrag= new UnderwearFragment();
+                ShampooFragment nextFrag= new ShampooFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnMallSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchFragment nextFrag= new SearchFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
                         .addToBackStack(null)

@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,29 +31,58 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeardFragment extends BaseFragment {
-    private List<Product> beardList;
+public class SearchFragment extends BaseFragment {
+    private List<Product> productList;
     private ProductAdapter productAdapter;
-    private RecyclerView rvBread;
+    private RecyclerView rvSearchProduct;
     private GridLayoutManager gridLayoutManager;
+    private AutoCompleteTextView actvNameProduct;
+    private Button btnSearchProduct;
+    private ImageButton btnBack;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.beard_fragment, container, false);
+        View view = inflater.inflate(R.layout.search_fragment, container, false);
         initView(view);
         return view;
     }
 
     private void initView(View view){
-        beardList = new ArrayList<>();
-        rvBread = view.findViewById(R.id.rvBread);
-        loadBeardProduct();
+        productList = new ArrayList<>();
+        btnBack = view.findViewById(R.id.btnBack);
+        btnSearchProduct = view.findViewById(R.id.btnSearchProduct);
+        rvSearchProduct = view.findViewById(R.id.rvSearchProduct);
+        actvNameProduct = view.findViewById(R.id.actvNameProduct);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, CATEGORY);
+        actvNameProduct.setAdapter(adapter);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShopFragment nextFrag= new ShopFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnSearchProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productList.clear();
+                String nameProduct = actvNameProduct.getEditableText().toString();
+                loadShampooProduct(nameProduct);
+                showMessage(nameProduct);
+            }
+        });
     }
 
-    private void loadBeardProduct() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
-                .addPathParameter("typeProduct", "Beard")
+    private void loadShampooProduct(String nameProduct) {
+        AndroidNetworking.get("https://barber-shopp.herokuapp.com/searchProduct?name={nameProduct}")
+                .addPathParameter("nameProduct", nameProduct)
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
@@ -67,15 +101,15 @@ public class BeardFragment extends BaseFragment {
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 String ratingProduct = jsonObject.getString("ratingProduct");
-                                beardList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                productList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
                             }
-                            productAdapter = new ProductAdapter(getContext(), beardList);
+                            productAdapter = new ProductAdapter(getContext(), productList);
                             gridLayoutManager = new GridLayoutManager(getContext(),2);
-                            rvBread.setAdapter(productAdapter);
-                            rvBread.setLayoutManager(gridLayoutManager);
-                            rvBread.setHasFixedSize(true);
-                            rvBread.setNestedScrollingEnabled(false);
-                            rvBread.scheduleLayoutAnimation();
+                            rvSearchProduct.setAdapter(productAdapter);
+                            rvSearchProduct.setLayoutManager(gridLayoutManager);
+                            rvSearchProduct.setHasFixedSize(true);
+                            rvSearchProduct.setNestedScrollingEnabled(false);
+                            rvSearchProduct.scheduleLayoutAnimation();
                             productAdapter.notifyDataSetChanged();
                             gridLayoutManager.setAutoMeasureEnabled(true);
                         } catch (JSONException e) {
@@ -90,4 +124,8 @@ public class BeardFragment extends BaseFragment {
                 });
 
     }
+
+    private static final String[] CATEGORY = new String[]{"Sáp Bed Head for Men-Matt Separation", "Sáp Glanzen Clay Chính Hãng 100g", "Sáp By Vilain Gold Digger Chính Hãng", "Sáp Kevin Murphy - Rough Rider", "Sáp Glanzen Prime - Floral Hương Hoa"};
+
+
 }

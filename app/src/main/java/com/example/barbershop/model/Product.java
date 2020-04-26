@@ -24,8 +24,9 @@ public class Product {
     @SerializedName("descriptionProduct")
     @Expose
     private String descriptionProduct;
-
-
+    @SerializedName("ratingProduct")
+    @Expose
+    private String ratingProduct;
 
     public String getId() {
         return id;
@@ -75,12 +76,21 @@ public class Product {
         this.descriptionProduct = descriptionProduct;
     }
 
-    public Product(String id, String imageProduct, String nameProduct, String priceProduct, String typeProduct, String descriptionProduct) {
+    public String getRatingProduct() {
+        return ratingProduct;
+    }
+
+    public void setRatingProduct(String ratingProduct) {
+        this.ratingProduct = ratingProduct;
+    }
+
+    public Product(String id, String imageProduct, String nameProduct, String priceProduct, String typeProduct, String descriptionProduct, String ratingProduct) {
         this.id = id;
         this.imageProduct = imageProduct;
         this.nameProduct = nameProduct;
         this.priceProduct = priceProduct;
         this.typeProduct = typeProduct;
         this.descriptionProduct = descriptionProduct;
+        this.ratingProduct = ratingProduct;
     }
 }

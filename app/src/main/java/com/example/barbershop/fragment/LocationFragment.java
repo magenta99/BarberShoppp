@@ -2,6 +2,7 @@ package com.example.barbershop.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.LocationAdapter;
 import com.example.barbershop.adapter.MyViewPagerAdapter;
 import com.example.barbershop.model.Location;
@@ -33,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationFragment extends Fragment {
+public class LocationFragment extends BaseFragment {
     private List<Location> locationList;
     private RecyclerView rvLocation;
     private LocationAdapter locationAdapter;
@@ -59,9 +61,9 @@ public class LocationFragment extends Fragment {
 
     private void initView(View view) {
         locationList = new ArrayList<>();
+        locationList.clear();
         rvLocation = view.findViewById(R.id.rvLocation);
         loadLocation();
-
     }
 
     private void loadLocation() {
@@ -69,7 +71,7 @@ public class LocationFragment extends Fragment {
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
@@ -99,16 +101,18 @@ public class LocationFragment extends Fragment {
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
                                 }
                             });
+                            showMessage(""+locationList.size());
 
-
+                        } catch (Error error) {
+                            Log.e("Lỗi",""+error);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("Lỗi",""+e);
                         }
                     }
 
                     @Override
                     public void onError(ANError error) {
-                        // handle error
+                        Log.d("Error",""+error);
                     }
                 });
 

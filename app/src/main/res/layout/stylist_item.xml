@@ -8,16 +8,17 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:weightSum="5"
         android:orientation="horizontal">
 
     <ImageView
         android:layout_width="0dp"
         android:src="@drawable/barber"
-        android:layout_weight="1"
+        android:layout_weight="2.5"
         android:layout_margin="4dp"
-        android:layout_height="50dp"/>
+        android:layout_gravity="center"
+        android:layout_height="65dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,12 +40,15 @@
 
         <androidx.appcompat.widget.AppCompatRatingBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:id="@+id/ratingBar"
             android:layout_marginTop="4dp"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:theme="@style/RatingBarStylist"
+            android:scaleX=".3"
+            android:scaleY=".3"
             android:transformPivotX="0dp"
-
+            android:transformPivotY="0dp"
+            android:isIndicator="true"
             />
 
     </LinearLayout>
