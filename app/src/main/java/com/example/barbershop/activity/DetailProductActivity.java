@@ -1,5 +1,6 @@
 package com.example.barbershop.activity;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,12 +24,10 @@ public class DetailProductActivity extends BaseActivity {
     private Button btnAddProduct;
     private ProductCartDAO productCartDAO;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
 
