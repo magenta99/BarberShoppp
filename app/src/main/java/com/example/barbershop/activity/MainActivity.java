@@ -37,13 +37,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         edtPhone = findViewById(R.id.edtPhone);
         btnGetCode = findViewById(R.id.btnGetCode);
-        spinner = findViewById(R.id.spCountry);
-
-        countryCode = new ArrayList<>();
-        countryCode.add("VN (+84)");
-        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryCode);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
 
         btnGetCode.setOnClickListener(new View.OnClickListener() {
             @Override

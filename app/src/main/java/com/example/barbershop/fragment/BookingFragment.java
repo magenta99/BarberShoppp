@@ -162,8 +162,7 @@ public class BookingFragment extends BaseFragment {
                     viewPagerStep.setCurrentItem(step);
                     sendDataToFragment();
                     showMessage(idSchedule);
-                    Log.d("idSchedule",idSchedule);
-                    sendDataToBooking();
+                    sendDataToBooking(idSchedule);
                 }
             }
         });
@@ -191,9 +190,9 @@ public class BookingFragment extends BaseFragment {
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    private void sendDataToBooking(){
+    private void sendDataToBooking(String idSchedule){
         AndroidNetworking.post("https://api.tradenowvn.com/v1/other/haircut-order")
-                .addQueryParameter("id","5e94a5145f07dc115a378b11")
+                .addQueryParameter("id",idSchedule)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()

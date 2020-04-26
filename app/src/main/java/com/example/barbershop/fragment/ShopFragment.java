@@ -57,7 +57,6 @@ public class ShopFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
-
         init(view);
         int images[] = {R.drawable.shop1, R.drawable.shop2, R.drawable.shop33, R.drawable.shop44};
         for (int image : images) {

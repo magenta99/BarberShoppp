@@ -34,7 +34,10 @@
         <activity
             android:name="com.example.barbershop.activity.SalonActivity"
             android:parentActivityName="com.example.barbershop.activity.HomeActivity"
-            android:theme="@style/ThemeBarber" />
+
+            android:theme="@style/ThemeBarber">
+
+        </activity>
         <activity
             android:name="com.example.barbershop.activity.BSTActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -49,6 +52,7 @@
         <activity
             android:name="com.example.barbershop.activity.DetailProductActivity"
             android:screenOrientation="portrait"
+            android:parentActivityName="com.example.barbershop."
             android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.SplashActivity"
@@ -61,11 +65,6 @@
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBarber">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.barbershop.activity.ConfirmCodeActivity"
@@ -77,7 +76,13 @@
         <activity
             android:name="com.example.barbershop.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
