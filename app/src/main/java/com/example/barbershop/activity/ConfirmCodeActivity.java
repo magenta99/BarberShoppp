@@ -36,6 +36,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private PinView pvCode;
     private Button btnContinue;
     private TextView tvResendCode;
+
     //    private FirebaseAuth mAuth;
 //    String codeSent;
     String phoneNumber;

@@ -59,7 +59,6 @@ public class CartActivity extends BaseActivity {
         recyclerView.setAdapter(productCartAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         productCartAdapter.notifyDataSetChanged();
-        final String adress = edtAdressInCart.getText().toString();
 
         double tongtien = productCartDAO.getTongTien();
         if (tvSumPrice != null)
@@ -80,9 +79,9 @@ public class CartActivity extends BaseActivity {
                                     .addBodyParameter("nameProduct", productCart.PRODUCT_CART_NAME)
                                     .addBodyParameter("amountProduct", Integer.toString(productCart.PRODUCT_CART_NUMBER))
                                     .addBodyParameter("priceProduct", Integer.toString(sumPrice))
-                                    .addBodyParameter("fullName", "Barber")
-                                    .addBodyParameter("phoneNumber", getRootUsername())
-                                    .addBodyParameter("address", adress)
+                                    .addBodyParameter("fullName", getRootUsername())
+                                    .addBodyParameter("phoneNumber", getRootPhoneNumber())
+                                    .addBodyParameter("address", edtAdressInCart.getText().toString().trim())
                                     .setTag("test")
                                     .setPriority(Priority.MEDIUM)
                                     .build()
@@ -110,6 +109,11 @@ public class CartActivity extends BaseActivity {
     private String getRootUsername() {
         String name;
         name = getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", null);
+        return name;
+    }
+    private String getRootPhoneNumber() {
+        String name;
+        name = getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", null);
         return name;
     }
 }
