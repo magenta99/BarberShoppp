@@ -51,8 +51,8 @@
             android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.DetailProductActivity"
-            android:screenOrientation="portrait"
             android:parentActivityName="com.example.barbershop."
+            android:screenOrientation="portrait"
             android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.SplashActivity"
@@ -61,11 +61,9 @@
 
         </activity>
         <activity
-            android:name="com.example.barbershop.activity.HomeActivity"
-            android:label="@string/title_activity_home"
+            android:name="com.example.barbershop.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBarber">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name="com.example.barbershop.activity.ConfirmCodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -74,9 +72,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.example.barbershop.activity.MainActivity"
+            android:name="com.example.barbershop.activity.HomeActivity"
+            android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/AppThemeBarber">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
