@@ -32,6 +32,7 @@ import java.util.List;
 
 
 public class BookingFragment extends BaseFragment {
+
     private StepView stepView;
     private NonSwipeViewPager viewPagerStep;
     private Button btn_back;
@@ -47,12 +48,19 @@ public class BookingFragment extends BaseFragment {
     private String nameServiceSchedule = "";
     private String idSchedule = "";
 
+    public BookingFragment() {}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
-        initView(view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
     }
 
     private void initView(View view) {
@@ -92,7 +100,7 @@ public class BookingFragment extends BaseFragment {
 
         setupStepView();
 
-        viewPagerStep.setAdapter(new MyViewPagerAdapter(getFragmentManager()));
+        viewPagerStep.setAdapter(new MyViewPagerAdapter(getChildFragmentManager()));
         viewPagerStep.setOffscreenPageLimit(4);
         viewPagerStep.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
