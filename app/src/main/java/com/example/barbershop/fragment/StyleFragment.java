@@ -1,43 +1,49 @@
 package com.example.barbershop.fragment;
 
+import android.Manifest;
+import android.content.ContentUris;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.example.authenticationsms.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+
 public class StyleFragment extends Fragment {
-    private ImageView image1;
-    private ImageView image2;
-    private ImageView image3;
-    private ImageView image4;
-    private ImageView image5;
-    private ImageView image6;
-    private ImageView image7;
-    private ImageView image8;
-    private ImageView image9;
-    private ImageView image10;
-    private ImageView image11;
-    private ImageView image12;
-    String style1 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F11.jpg?alt=media&token=33b4c939-7808-439c-a773-a2981eded34c";
-    String style2 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F12.jpg?alt=media&token=681d3380-d390-4471-995c-a2b80befb7f4";
-    String style3 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F14.jpg?alt=media&token=6e1f0937-57df-478e-becb-c632b913832e";
-    String style4 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F21.jpg?alt=media&token=6df21f08-71a2-4c6f-a8ce-618db1a2f38e";
-    String style5 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F22.jpg?alt=media&token=55df5027-df3f-4510-97b7-413f820887b9";
-    String style6 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F23.jpg?alt=media&token=54130f66-5240-4e4e-a198-c4f811b08484";
-    String style7 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F31.jpg?alt=media&token=ef5f9bd5-dad6-4db0-8da8-b492dfb0cbed";
-    String style8 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F32.jpg?alt=media&token=68c630c4-4087-4cd9-87b3-5ca14f009ab3";
-    String style9 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F33.jpg?alt=media&token=a10af095-89c2-4c0b-be02-d85588dbbbe3";
-    String style10 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F41.jpg?alt=media&token=336b5ffb-cbd0-48e1-a894-3a6c09114883";
-    String style11 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F42.jpg?alt=media&token=eaf52429-283e-4d93-a4ac-94e83e87b5d4";
-    String style12 = "https://firebasestorage.googleapis.com/v0/b/authenticationsms.appspot.com/o/Style%2F43.jpg?alt=media&token=9e1ac2b6-1258-4d73-ad48-7342419505b3";
+
+    String IMAGE_PATH;
+    Button btnUpload;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,31 +53,181 @@ public class StyleFragment extends Fragment {
     }
 
     private void initView(View view) {
-        image1 = view.findViewById(R.id.image1);
-        image2 = view.findViewById(R.id.image2);
-        image3 = view.findViewById(R.id.image3);
-        image4 = view.findViewById(R.id.image4);
-        image5 = view.findViewById(R.id.image5);
-        image6 = view.findViewById(R.id.image6);
-        image7 = view.findViewById(R.id.image7);
-        image8 = view.findViewById(R.id.image8);
-        image9 = view.findViewById(R.id.image9);
-        image10 = view.findViewById(R.id.image10);
-        image11 = view.findViewById(R.id.image11);
-        image12 = view.findViewById(R.id.image12);
+        btnUpload = view.findViewById(R.id.btnUpload);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPermistion();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 0);
+            }
+        });
 
-        Picasso.get().load(style1).into(image1);
-        Picasso.get().load(style2).into(image2);
-        Picasso.get().load(style3).into(image3);
-        Picasso.get().load(style4).into(image4);
-        Picasso.get().load(style5).into(image5);
-        Picasso.get().load(style6).into(image6);
-        Picasso.get().load(style7).into(image7);
-        Picasso.get().load(style8).into(image8);
-        Picasso.get().load(style9).into(image9);
-        Picasso.get().load(style10).into(image10);
-        Picasso.get().load(style11).into(image11);
-        Picasso.get().load(style12).into(image12);
+    }
 
+    private void checkPermistion() {
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == getActivity().RESULT_OK) {
+            IMAGE_PATH = ReadPathUtil.getPath(getActivity(), data.getData());
+        //    Uri uri = Uri.fromFile(new File(IMAGE_PATH));
+            // Post image
+            AndroidNetworking.upload("http://barber123.herokuapp.com/Upload")
+                    .addMultipartFile("file", new File(IMAGE_PATH))
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .setUploadProgressListener(new UploadProgressListener() {
+                        @Override
+                        public void onProgress(long bytesUploaded, long totalBytes) {
+                            // do anything with progress
+                        }
+                    })
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String status = response.getString("image");
+                                Toast.makeText(getActivity(), status, Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                Log.d("Error", "" + e);
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            //  Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                            Log.d("Err", error.toString());
+                        }
+                    });
+            //     Toast.makeText(getActivity(), IMAGE_PATH, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+}
+
+class ReadPathUtil {
+    /// get path API >19 KITKAT
+    public static String getPath(final Context context, final Uri uri) {
+
+        // DocumentProvider
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 }
