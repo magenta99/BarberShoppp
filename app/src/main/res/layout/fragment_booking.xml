@@ -61,9 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:background="@color/colorBlack"
+                android:background="@color/colorGold"
                 android:text="Tiếp theo"
-                android:textColor="@color/colorGold"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
         </LinearLayout>

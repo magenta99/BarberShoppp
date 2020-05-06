@@ -25,8 +25,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
     private EditText edtPhone;
     private Button btnGetCode;
-    private EditText edtName;
-    private EditText edtConfirmOTP;
     private Button btnLogin;
 
     private Spinner spinner;
@@ -38,11 +36,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_main);
-        edtPhone = findViewById(R.id.edtPhone);
-        btnGetCode = findViewById(R.id.btnGetCode);
-        edtName = findViewById(R.id.edtFullName);
-        edtConfirmOTP = findViewById(R.id.edtConfirmOTP);
+        edtPhone = findViewById(R.id.edtPhoneNumber);
         btnLogin = findViewById(R.id.btnLogin);
+        btnGetCode = findViewById(R.id.btnLogin);
 
         btnGetCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,57 +87,57 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtConfirmOTP.getText().toString().isEmpty()) {
-                    showMessage("Không để trống OTP");
-                } else {
-                    confirmOTP();
-                }
-            }
-        });
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (edtConfirmOTP.getText().toString().isEmpty()) {
+//                    showMessage("Không để trống OTP");
+//                } else {
+//                    confirmOTP();
+//                }
+//            }
+//        });
     }
 
-    public void confirmOTP() {
-        AndroidNetworking.post("http://barber123.herokuapp.com/checkOTP")
-                .addBodyParameter("id", requestId)
-                .addBodyParameter("code", edtConfirmOTP.getText().toString().trim())
-                .setTag("test")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("checkOtp", response.toString());
-                            String status = response.getString("status");
-                            if (Integer.parseInt(status) == 0) {
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                saveUsername(edtPhone.getText().toString().trim());
-                            } else {
-                                showMessegeWarning("Vui lòng kiểm tra lại OTP");
-                            }
-                        } catch (JSONException e) {
-                            Log.d("Error", "" + e);
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                    }
-                });
-    }
-
-    private void saveUsername(String phoneNumber) {
-        SharedPreferences sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("PHONE",  phoneNumber);
-        edit.putString("NAME", edtName.getText().toString().trim());
-        edit.apply();
-    }
+//    public void confirmOTP() {
+//        AndroidNetworking.post("http://barber123.herokuapp.com/checkOTP")
+//                .addBodyParameter("id", requestId)
+//                .addBodyParameter("code", edtConfirmOTP.getText().toString().trim())
+//                .setTag("test")
+//                .setPriority(Priority.MEDIUM)
+//                .build()
+//                .getAsJSONObject(new JSONObjectRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            Log.d("checkOtp", response.toString());
+//                            String status = response.getString("status");
+//                            if (Integer.parseInt(status) == 0) {
+//                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+//                                startActivity(intent);
+//                                saveUsername(edtPhone.getText().toString().trim());
+//                            } else {
+//                                showMessegeWarning("Vui lòng kiểm tra lại OTP");
+//                            }
+//                        } catch (JSONException e) {
+//                            Log.d("Error", "" + e);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError error) {
+//                        // handle error
+//                    }
+//                });
+//    }
+//
+//    private void saveUsername(String phoneNumber) {
+//        SharedPreferences sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE);
+//        SharedPreferences.Editor edit = sharedPreferences.edit();
+//        edit.putString("PHONE",  phoneNumber);
+//        edit.putString("NAME", edtName.getText().toString().trim());
+//        edit.apply();
+//    }
 
 }
 

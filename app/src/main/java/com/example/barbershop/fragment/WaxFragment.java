@@ -1,17 +1,21 @@
 package com.example.barbershop.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -38,6 +42,8 @@ public class WaxFragment extends BaseFragment {
     private Spinner spnSortWax;
     private List<String> spList;
     private ArrayAdapter<String> spAdapter;
+    private ImageButton btnBackWax;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -48,9 +54,10 @@ public class WaxFragment extends BaseFragment {
         return view;
     }
 
-    private void initView(View view){
+    private void initView(View view) {
+        swipeRefreshLayout = view.findViewById(R.id.srlWax);
         waxList = new ArrayList<>();
-
+        btnBackWax = view.findViewById(R.id.btnBackWax);
         rvWax = view.findViewById(R.id.rvWax);
         spnSortWax = view.findViewById(R.id.spnSortWax);
         spList = new ArrayList<>();
@@ -82,6 +89,33 @@ public class WaxFragment extends BaseFragment {
 
             }
         });
+
+        try {
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    waxList.clear();
+                    loadWaxProduct();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        } catch (NullPointerException err) {
+
+        } catch (Exception e) {
+            Log.e("Lỗi", "" + e);
+        }
+
+
+        btnBackWax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShopFragment nextFrag = new ShopFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     private void loadWaxProduct() {
@@ -105,10 +139,10 @@ public class WaxFragment extends BaseFragment {
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 String ratingProduct = jsonObject.getString("ratingProduct");
-                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct, ratingProduct));
                             }
                             productAdapter = new ProductAdapter(getContext(), waxList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),2);
+                            gridLayoutManager = new GridLayoutManager(getContext(), 2);
                             rvWax.setAdapter(productAdapter);
                             rvWax.setLayoutManager(gridLayoutManager);
                             rvWax.setHasFixedSize(true);
@@ -128,6 +162,7 @@ public class WaxFragment extends BaseFragment {
                 });
 
     }
+
     private void loadWaxProductASC() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
@@ -149,10 +184,10 @@ public class WaxFragment extends BaseFragment {
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 String ratingProduct = jsonObject.getString("ratingProduct");
-                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct, ratingProduct));
                             }
                             productAdapter = new ProductAdapter(getContext(), waxList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),2);
+                            gridLayoutManager = new GridLayoutManager(getContext(), 2);
                             rvWax.setAdapter(productAdapter);
                             rvWax.setLayoutManager(gridLayoutManager);
                             rvWax.setHasFixedSize(true);
@@ -172,6 +207,7 @@ public class WaxFragment extends BaseFragment {
                 });
 
     }
+
     private void loadWaxProductDSC() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
@@ -193,10 +229,10 @@ public class WaxFragment extends BaseFragment {
                                 String typeProduct = jsonObject.getString("typeProduct");
                                 String descriptionProduct = jsonObject.getString("descriptionProduct");
                                 String ratingProduct = jsonObject.getString("ratingProduct");
-                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct, ratingProduct));
                             }
                             productAdapter = new ProductAdapter(getContext(), waxList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),2);
+                            gridLayoutManager = new GridLayoutManager(getContext(), 2);
                             rvWax.setAdapter(productAdapter);
                             rvWax.setLayoutManager(gridLayoutManager);
                             rvWax.setHasFixedSize(true);
@@ -216,4 +252,6 @@ public class WaxFragment extends BaseFragment {
                 });
 
     }
+
+
 }

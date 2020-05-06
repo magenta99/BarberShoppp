@@ -20,7 +20,5 @@ public class LoginActivity extends BaseActivity {
                 startNewActivity(MainActivity.class);
             }
         });
-
-
     }
 }

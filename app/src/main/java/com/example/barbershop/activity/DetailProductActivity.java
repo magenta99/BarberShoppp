@@ -70,5 +70,4 @@ public class DetailProductActivity extends BaseActivity {
 
     }
 
-
 }

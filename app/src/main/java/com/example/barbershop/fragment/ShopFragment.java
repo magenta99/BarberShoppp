@@ -64,7 +64,6 @@ public class ShopFragment extends BaseFragment {
         }
         return view;
     }
-
     private void init(View view) {
         btnMallSearch = view.findViewById(R.id.btnMallSearch);
         llWax = view.findViewById(R.id.llWax);
@@ -95,8 +94,6 @@ public class ShopFragment extends BaseFragment {
         tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
 
     }
-
-
     private void loadWaxProduct() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
@@ -185,7 +182,6 @@ public class ShopFragment extends BaseFragment {
                 });
 
     }
-
     private void flipperImages(int image) {
         ImageView imageView = new ImageView(getContext());
         imageView.setBackgroundResource(image);
@@ -194,8 +190,6 @@ public class ShopFragment extends BaseFragment {
         viewFlipper.setAutoStart(true);
         viewFlipper.setInAnimation(getContext(), android.R.anim.fade_in);
     }
-
-
     private void startNewFragment(){
         llWax.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -58,14 +58,12 @@ public class LocationFragment extends BaseFragment {
         initView(view);
         return view;
     }
-
     private void initView(View view) {
         locationList = new ArrayList<>();
         locationList.clear();
         rvLocation = view.findViewById(R.id.rvLocation);
         loadLocation();
     }
-
     private void loadLocation() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/location")
                 .addQueryParameter("limit", "3")
@@ -99,9 +97,9 @@ public class LocationFragment extends BaseFragment {
                                     intent.setAction("My BroadCast");
                                     intent.putExtra("location",location);
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                                    Toast.makeText(getContext(), ""+strLocation, Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            showMessage(""+locationList.size());
 
                         } catch (Error error) {
                             Log.e("Lỗi",""+error);
@@ -118,5 +116,7 @@ public class LocationFragment extends BaseFragment {
 
 
     }
+
+
 
 }

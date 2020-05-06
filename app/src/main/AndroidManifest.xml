@@ -51,19 +51,26 @@
             android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.DetailProductActivity"
-            android:parentActivityName="com.example.barbershop."
             android:screenOrientation="portrait"
+            android:parentActivityName="com.example.barbershop."
             android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
-            android:name="com.example.barbershop.activity.MainActivity"
+            android:name="com.example.barbershop.activity.HomeActivity"
+            android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/AppThemeBarber">
+
+    </activity>
         <activity
             android:name="com.example.barbershop.activity.ConfirmCodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -72,15 +79,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.example.barbershop.activity.HomeActivity"
-            android:label="@string/title_activity_home"
+            android:name="com.example.barbershop.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBarber">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

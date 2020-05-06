@@ -3,7 +3,6 @@ package com.example.barbershop.activity;
 import android.os.Bundle;
 
 import com.example.authenticationsms.R;
-import com.example.barbershop.fragment.BookFragment;
 import com.example.barbershop.fragment.BookingFragment;
 import com.example.barbershop.fragment.HomeFragment;
 import com.example.barbershop.fragment.SettingsFragment;

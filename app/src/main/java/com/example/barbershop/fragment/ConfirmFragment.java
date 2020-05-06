@@ -35,11 +35,6 @@ import es.dmoral.toasty.Toasty;
 public class ConfirmFragment extends Fragment {
     static ConfirmFragment instance;
     private BroadcastReceiver broadcastReceiver;
-    private String locationConfirm;
-    private String timeConfirm;
-    private String dateConfirm;
-    private String stylistConfirm;
-    private String serviceConfirm;
     private TextView locationBooking;
     private TextView timeBooking;
     private TextView dateBooking;
@@ -99,7 +94,5 @@ public class ConfirmFragment extends Fragment {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
-
-
 
 }

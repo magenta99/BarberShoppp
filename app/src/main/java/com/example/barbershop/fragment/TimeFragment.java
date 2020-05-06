@@ -1,6 +1,9 @@
 package com.example.barbershop.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,15 +52,19 @@ public class TimeFragment extends BaseFragment {
     private ScheduleAdapter scheduleAdapter;
     private LocalBroadcastManager localBroadcastManager;
     private GridLayoutManager gridLayoutManagerSchedule;
+    private String locationSchedule = "";
 
 
     static TimeFragment instance;
-    public static TimeFragment getInstance(){
-        if(instance == null){
+
+    public static TimeFragment getInstance() {
+        if (instance == null) {
             instance = new TimeFragment();
         }
         return instance;
     }
+
+    private BroadcastReceiver mRefreshReceiver;
 
     @Nullable
     @Override
@@ -71,7 +79,6 @@ public class TimeFragment extends BaseFragment {
         dateBook2 = view.findViewById(R.id.dateBook2);
         cardToday = view.findViewById(R.id.cardToday);
         cardTomorrow = view.findViewById(R.id.cardTomorrow);
-
 
         //Lấy ngày hiện tại
         String currentDate = new SimpleDateFormat("dd/MM", Locale.getDefault()).format(new Date());
@@ -90,6 +97,20 @@ public class TimeFragment extends BaseFragment {
         rvSchedule = view.findViewById(R.id.rvSchedule);
         bookingList = new ArrayList<>();
 
+        //Lấy location từ LocationFragment
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("Location");
+        mRefreshReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("Location")) {
+                    String location = intent.getStringExtra("location");
+                    locationSchedule = location;
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mRefreshReceiver, filter);
+
         //Tự động chọn ngày hôm nay
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -98,31 +119,35 @@ public class TimeFragment extends BaseFragment {
             }
         }, 200);
 
+        //Load giờ hôm nay theo Location
         cardToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookingList.clear();
                 cardToday.setCardBackgroundColor(Color.parseColor("#ffcc33"));
                 cardTomorrow.setCardBackgroundColor(Color.WHITE);
-                loadBooking(1);
+                loadBooking(1, locationSchedule);
+
             }
         });
 
+        //Load giờ ngày mai theo Location
         cardTomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookingList.clear();
                 cardTomorrow.setCardBackgroundColor(Color.parseColor("#ffcc33"));
                 cardToday.setCardBackgroundColor(Color.WHITE);
-                loadBooking(2);
+                loadBooking(2, locationSchedule);
             }
         });
+
     }
 
-    private void loadBooking(int day) {
-        AndroidNetworking.get("https://api.tradenowvn.com/v1/other/haircut-getall?number={day}")
-                .addPathParameter("day", Integer.toString(day))
-                .addQueryParameter("limit", "3")
+    private void loadBooking(int number, String address) {
+        AndroidNetworking.get("https://api.tradenowvn.com/v1/other/haircut-getall")
+                .addQueryParameter("number", Integer.toString(number))
+                .addQueryParameter("address", address)
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.LOW)
@@ -139,28 +164,25 @@ public class TimeFragment extends BaseFragment {
                                 boolean exist = jsonObject1.getBoolean("exist");
                                 String date = jsonObject1.getString("date");
                                 bookingList.add(new Booking(id, time, exist, date));
-
                             }
                             scheduleAdapter = new ScheduleAdapter(getContext(), bookingList);
                             gridLayoutManagerSchedule = new GridLayoutManager(getContext(), 4, GridLayoutManager.HORIZONTAL, false);
-
                             rvSchedule.setLayoutManager(gridLayoutManagerSchedule);
                             rvSchedule.setAdapter(scheduleAdapter);
                             scheduleAdapter.notifyDataSetChanged();
                             scheduleAdapter.setOnItemClickListner(new ScheduleAdapter.onItemClickListner() {
                                 @Override
-                                public void onClick(String idBook,String strSchedule,String date) {
+                                public void onClick(String idBook, String strSchedule, String date) {
                                     Intent intent = new Intent();
                                     intent.setAction("Time Broadcast");
-                                    intent.putExtra("idBook",idBook);
-                                    intent.putExtra("timeBook",strSchedule);
-                                    intent.putExtra("dateBook",date);
+                                    intent.putExtra("idBook", idBook);
+                                    intent.putExtra("timeBook", strSchedule);
+                                    intent.putExtra("dateBook", date);
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
                                 }
                             });
-
                         } catch (JSONException e) {
-                            Log.d("Error", "" + e);
+                            Log.d("Lỗi", "" + e);
                         }
                     }
 
@@ -170,6 +192,12 @@ public class TimeFragment extends BaseFragment {
                     }
                 });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mRefreshReceiver);
     }
 
 }

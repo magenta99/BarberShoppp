@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
@@ -26,7 +27,9 @@ import com.example.barbershop.activity.HomeActivity;
 import com.example.barbershop.model.NonSwipeViewPager;
 import com.example.barbershop.adapter.MyViewPagerAdapter;
 import com.shuhart.stepview.StepView;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +42,8 @@ public class BookingFragment extends BaseFragment {
     private Button btn_next;
     private int number = 0;
     private int step = 0;
-    private  BroadcastReceiver broadcastReceiver;
-    private  LocalBroadcastManager localBroadcastManager;
+    private BroadcastReceiver broadcastReceiver;
+    private LocalBroadcastManager localBroadcastManager;
     private String locationSchedule = "";
     private String dateSchedule = "";
     private String timeSchedule = "";
@@ -48,7 +51,8 @@ public class BookingFragment extends BaseFragment {
     private String nameServiceSchedule = "";
     private String idSchedule = "";
 
-    public BookingFragment() {}
+    public BookingFragment() {
+    }
 
     @Nullable
     @Override
@@ -129,12 +133,11 @@ public class BookingFragment extends BaseFragment {
                     btn_back.setBackgroundResource(R.color.colorBlack);
                     btn_back.setTextColor(getResources().getColor(R.color.colorGold));
                 }
-                showMessage(""+i);
+                viewPagerStep.getAdapter().notifyDataSetChanged();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -156,6 +159,11 @@ public class BookingFragment extends BaseFragment {
                 } else if (step == 0 && locationSchedule != "") {
                     step++;
                     viewPagerStep.setCurrentItem(step);
+                    Intent intent = new Intent();
+                    intent.setAction("Location");
+                    intent.putExtra("location", locationSchedule);
+                    localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+
                 } else if (step == 1 && timeSchedule == "") {
                     showMessegeWarning("Vui lòng chọn giờ");
                 } else if (step == 1 && timeSchedule != "") {
@@ -176,7 +184,6 @@ public class BookingFragment extends BaseFragment {
         });
     }
 
-
     private void setupStepView() {
         List<String> stepList = new ArrayList<>();
         stepList.add("Salon");
@@ -186,21 +193,21 @@ public class BookingFragment extends BaseFragment {
         stepView.setSteps(stepList);
     }
 
-    private void sendDataToFragment(){
+    private void sendDataToFragment() {
         Intent intent = new Intent();
         intent.setAction("Confirmation");
-        intent.putExtra("locationSchedule",locationSchedule);
-        intent.putExtra("timeSchedule",timeSchedule);
-        intent.putExtra("dateSchedule",dateSchedule);
-        intent.putExtra("stylistSchedule",nameStylistSchedule);
-        intent.putExtra("serviceSchedule",nameServiceSchedule);
-        intent.putExtra("idSchedule",idSchedule);
+        intent.putExtra("locationSchedule", locationSchedule);
+        intent.putExtra("timeSchedule", timeSchedule);
+        intent.putExtra("dateSchedule", dateSchedule);
+        intent.putExtra("stylistSchedule", nameStylistSchedule);
+        intent.putExtra("serviceSchedule", nameServiceSchedule);
+        intent.putExtra("idSchedule", idSchedule);
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    private void sendDataToBooking(String idSchedule){
+    private void sendDataToBooking(String idSchedule) {
         AndroidNetworking.post("https://api.tradenowvn.com/v1/other/haircut-order")
-                .addQueryParameter("id",idSchedule)
+                .addQueryParameter("id", idSchedule)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -209,15 +216,14 @@ public class BookingFragment extends BaseFragment {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                     }
+
                     @Override
                     public void onError(ANError error) {
-                        Log.e("Lỗi",error.getMessage());
+                        Log.e("Lỗi", error.getMessage());
                     }
                 });
 
     }
-
-
 
     @Override
     public void onDestroy() {
@@ -225,6 +231,5 @@ public class BookingFragment extends BaseFragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
-
-    }
+}
 
