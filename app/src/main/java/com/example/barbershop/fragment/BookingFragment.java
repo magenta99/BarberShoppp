@@ -31,6 +31,7 @@ import com.shuhart.stepview.StepView;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -177,8 +178,12 @@ public class BookingFragment extends BaseFragment {
                     step++;
                     viewPagerStep.setCurrentItem(step);
                     sendDataToFragment();
-                    showMessage(idSchedule);
-                    sendDataToBooking(idSchedule);
+                    sendDataToBookingID(idSchedule);
+                    Calendar calendar = Calendar.getInstance();
+                    int month = calendar.get(Calendar.MONTH);
+                    int monthChuan = month + 1;
+                    String date = dateSchedule + "/" + monthChuan + "/" + "2020";
+                    sendDatatoBooking(idSchedule, locationSchedule, timeSchedule, date, nameServiceSchedule, nameStylistSchedule, false);
                 }
             }
         });
@@ -205,7 +210,33 @@ public class BookingFragment extends BaseFragment {
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    private void sendDataToBooking(String idSchedule) {
+    private void sendDatatoBooking(String idSchedule, String locationSchedule, String timeSchedule, String dateSchedule, String serviceSchedule, String stylistSchedule, boolean statusSchedule) {
+        AndroidNetworking.post("https://barber-shopp.herokuapp.com/bookingSchedule")
+                .addQueryParameter("idSchedule", idSchedule)
+                .addQueryParameter("locationSchedule", locationSchedule)
+                .addQueryParameter("timeSchedule", timeSchedule)
+                .addQueryParameter("dateSchedule", dateSchedule)
+                .addQueryParameter("serviceSchedule", serviceSchedule)
+                .addQueryParameter("stylistSchedule", stylistSchedule)
+                .addQueryParameter("statusSchedule", String.valueOf(statusSchedule))
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        Log.e("Lỗi", error.getMessage());
+                    }
+                });
+
+    }
+
+    private void sendDataToBookingID(String idSchedule) {
         AndroidNetworking.post("https://api.tradenowvn.com/v1/other/haircut-order")
                 .addQueryParameter("id", idSchedule)
                 .setTag("test")
