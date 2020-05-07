@@ -65,9 +65,6 @@ public class SettingsFragment extends Fragment {
                         getActivity().finish();
                         SharedPreferences sharedPreferences = getContext().getSharedPreferences("USER", MODE_PRIVATE);
                         sharedPreferences.edit().remove("PHONE").commit();
-                        sharedPreferences.edit().remove("NAME").commit();
-
-
                     }
                 });
                 AlertDialog dialog = mBuilder.create();

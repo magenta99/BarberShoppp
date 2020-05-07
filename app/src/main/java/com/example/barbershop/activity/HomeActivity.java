@@ -56,7 +56,11 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, new HomeFragment()).commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
 }

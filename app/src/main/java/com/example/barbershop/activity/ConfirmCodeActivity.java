@@ -36,9 +36,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private PinView pvCode;
     private Button btnContinue;
     private TextView tvResendCode;
-
-    //    private FirebaseAuth mAuth;
-//    String codeSent;
+    private int SUCCESS = 0;
     String phoneNumber;
     String requestId;
 
@@ -48,23 +46,22 @@ public class ConfirmCodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_code);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
-        //  mAuth = FirebaseAuth.getInstance();
         pvCode = findViewById(R.id.pvCode);
         btnContinue = findViewById(R.id.btnContinue);
         tvResendCode = findViewById(R.id.tvResendCode);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String phone = bundle.getString("phoneNumber", "");
+        final String phone = bundle.getString("phoneNumber", "");
         String id = bundle.getString("request_id", "");
         phoneNumber = phone;
         requestId = id;
-        tvPhoneNumber.setText("+84" + phoneNumber);
+        tvPhoneNumber.setText(phoneNumber);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkOTP(requestId, phoneNumber);
+                confirmOTP(requestId, phoneNumber);
             }
         });
 
@@ -74,10 +71,9 @@ public class ConfirmCodeActivity extends BaseActivity {
                 reSendOtp(requestId, phoneNumber);
             }
         });
-
     }
 
-    public void checkOTP(final String request_id, final String phone) {
+    public void confirmOTP(final String request_id, final String phone) {
         AndroidNetworking.post("http://barber123.herokuapp.com/checkOTP")
                 .addBodyParameter("id", request_id)
                 .addBodyParameter("code", pvCode.getText().toString())
@@ -90,7 +86,7 @@ public class ConfirmCodeActivity extends BaseActivity {
                         try {
                             Log.d("checkOtp", response.toString());
                             String status = response.getString("status");
-                            if (Integer.parseInt(status) == 0) {
+                            if (Integer.parseInt(status) == SUCCESS) {
                                 Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 saveUsername(phone);
@@ -100,7 +96,6 @@ public class ConfirmCodeActivity extends BaseActivity {
                         } catch (JSONException e) {
                             Log.d("Error", "" + e);
                         }
-
                     }
 
                     @Override
@@ -111,9 +106,11 @@ public class ConfirmCodeActivity extends BaseActivity {
     }
 
     private void reSendOtp(final String request_id, final String phone) {
+        final String phoneNumber = phone;
+        String subNumber = phoneNumber.substring(1, 10);
         AndroidNetworking.post("http://barber123.herokuapp.com/confirmOTP")
                 .addBodyParameter("id", request_id)
-                .addBodyParameter("phone", phone)
+                .addBodyParameter("phone", subNumber)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -123,7 +120,7 @@ public class ConfirmCodeActivity extends BaseActivity {
                         try {
                             Log.d("confirmOtp", response.toString());
                             String status = response.getString("status");
-                            if (Integer.parseInt(status) == 0) {
+                            if (Integer.parseInt(status) == SUCCESS) {
                                 showMessegeSuccess("Mã đã gửi lại thành công");
                                 String id = response.getString("request_id");
                                 requestId = id;
@@ -133,7 +130,6 @@ public class ConfirmCodeActivity extends BaseActivity {
                         } catch (JSONException e) {
                             Log.d("Error", "" + e);
                         }
-
                     }
 
                     @Override
@@ -146,69 +142,7 @@ public class ConfirmCodeActivity extends BaseActivity {
     private void saveUsername(String phoneNumber) {
         SharedPreferences sharedPreferences = getSharedPreferences("USER", MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("PHONE", "+84" + phoneNumber);
+        edit.putString("PHONE", phoneNumber);
         edit.apply();
     }
-
-
-//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            startNewActivity(HomeActivity.class);
-//                            saveUsername(phone);
-//
-//                        } else {
-//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-//                                showMessegeWarning("Mã không đúng");
-//                            } else {
-//                                showMessegeSuccess("Đăng nhập thành công");
-//
-//                            }
-//                        }
-//                    }
-//                });
-//    }
-
-//    private void sendVertificationCode(String phoneNumber) {
-//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//                phoneNumber,        // Phone number to verify
-//                60,                 // Timeout duration
-//                TimeUnit.SECONDS,   // Unit of timeout
-//                this,               // Activity (for callback binding)
-//                mCallbacks);        // OnVerificationStateChangedCallbacksPhoneAuthActivity.java
-//    }
-//
-//    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//        @Override
-//        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-//
-//        }
-//
-//        @Override
-//        public void onVerificationFailed(FirebaseException e) {
-//
-//        }
-//
-//        @Override
-//        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-//            super.onCodeSent(s, forceResendingToken);
-//            codeSent = s;
-//        }
-//    };
-
-    //    private void verifySignInCode(String codeSent) {
-//        String code = pvCode.getText().toString();
-//        if (code.isEmpty()) {
-//            showMessegeWarning("Vui lòng nhập mã code");
-//        } else {
-//            //PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
-//            //signInWithPhoneAuthCredential(credential);
-//        }
-//        //codeSent laf cai code da gui
-//        //dung de so sanh voi ca code nhap vao
-//    }
-
 }
