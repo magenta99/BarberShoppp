@@ -26,8 +26,7 @@ public class MainActivity extends BaseActivity {
     private EditText edtPhone;
     private Button btnLogin;
 
-    String requestId;
-    private int SUCCESS = 0;
+    private int SUCCESS = 100;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -39,16 +38,18 @@ public class MainActivity extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtPhone.getText().toString().isEmpty()) {
-                    showMessage("Không để trống số điện thoại");
+                String phone = edtPhone.getText().toString();
+                String regexStr = "^[0-9]{10}$";
+                if (phone.isEmpty()) {
+                    showMessegeWarning("Không để trống số điện thoại");
+                } else if (!phone.matches(regexStr)) {
+                    showMessegeWarning("Vui lòng nhập đúng kiểu số điện thoại");
                 } else {
                     final String phoneNumber = edtPhone.getText().toString();
-                    String subNumber = phoneNumber.substring(1, 10);
-                    if (phoneNumber.isEmpty()) {
-                        showMessegeWarning("Vui lòng nhập số điện thoại");
-                    } else {
-                        AndroidNetworking.post("http://barber123.herokuapp.com/sendOTP")
-                                .addBodyParameter("phone", subNumber)
+                    final int otp = randomWithRange(100000, 999999);
+                        AndroidNetworking.post("http://barber123.herokuapp.com/sendOtp")
+                                .addBodyParameter("phone", phoneNumber)
+                                .addBodyParameter("otp", String.valueOf(otp))
                                 .setTag("test")
                                 .setPriority(Priority.MEDIUM)
                                 .build()
@@ -56,18 +57,16 @@ public class MainActivity extends BaseActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         try {
-                                            String status = response.getString("status");
+                                            String status = response.getString("CodeResult");
                                             if (Integer.parseInt(status) == SUCCESS) {
                                                 Log.d("sendOtp", response.toString());
-                                                String id = response.getString("request_id");
                                                 Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
                                                 Bundle bundle = new Bundle();
                                                 bundle.putString("phoneNumber", phoneNumber);
-                                                bundle.putString("request_id", id);
+                                                bundle.putString("otp", String.valueOf(otp));
                                                 intent.putExtras(bundle);
                                                 startActivity(intent);
                                                 showMessegeSuccess("Vui lòng kiểm tra mã trong tin nhắn");
-                                                requestId = id;
                                             } else {
                                                 showMessegeWarning("Vui lòng kiểm tra lại");
                                             }
@@ -75,17 +74,21 @@ public class MainActivity extends BaseActivity {
                                             Log.d("Error", "" + e);
                                         }
                                     }
+
                                     @Override
                                     public void onError(ANError error) {
                                         // handle error
                                     }
                                 });
-                    }
                 }
             }
         });
     }
 
+    int randomWithRange(int min, int max) {
+        int range = Math.abs(max - min) + 1;
+        return (int) (Math.random() * range) + (min <= max ? min : max);
+    }
 }
 
 
