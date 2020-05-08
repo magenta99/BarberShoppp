@@ -36,9 +36,9 @@ public class ConfirmCodeActivity extends BaseActivity {
     private PinView pvCode;
     private Button btnContinue;
     private TextView tvResendCode;
-    private int SUCCESS = 0;
+    private int SUCCESS = 100;
     String phoneNumber;
-    String requestId;
+    String OTP;
 
 
     @Override
@@ -53,30 +53,85 @@ public class ConfirmCodeActivity extends BaseActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         final String phone = bundle.getString("phoneNumber", "");
-        String id = bundle.getString("request_id", "");
+        String otp = bundle.getString("otp", "");
         phoneNumber = phone;
-        requestId = id;
+        OTP = otp;
         tvPhoneNumber.setText(phoneNumber);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmOTP(requestId, phoneNumber);
+
+                String code = pvCode.getText().toString();
+                if (code.isEmpty()) {
+                    showMessegeWarning("Vui lòng nhập OTP");
+                } else if (code.length() < 6) {
+                    showMessegeWarning("Vui lòng nhập đủ OTP");
+                } else {
+                    if (Integer.parseInt(OTP) == Integer.parseInt(code)) {
+                        Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        saveUsername(phone);
+                    } else {
+                        showMessegeWarning("Vui lòng kiểm tra lại OTP");
+                    }
+                }
             }
         });
 
         tvResendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reSendOtp(requestId, phoneNumber);
+                reSendOtp(phoneNumber);
             }
         });
     }
 
-    public void confirmOTP(final String request_id, final String phone) {
-        AndroidNetworking.post("http://barber123.herokuapp.com/checkOTP")
-                .addBodyParameter("id", request_id)
-                .addBodyParameter("code", pvCode.getText().toString())
+//    public void confirmOTP(final String Otp, final String phone) {
+//        if (OTP == pvCode.getText().toString()) {
+//            Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
+//            startActivity(intent);
+//            saveUsername(phone);
+//        } else {
+//            showMessegeWarning("Vui lòng kiểm tra lại OTP");
+//        }
+//        AndroidNetworking.post("http://barber123.herokuapp.com/checkOTP")
+//                .addBodyParameter("id", request_id)
+//                .addBodyParameter("code", pvCode.getText().toString())
+//                .setTag("test")
+//                .setPriority(Priority.MEDIUM)
+//                .build()
+//                .getAsJSONObject(new JSONObjectRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            Log.d("checkOtp", response.toString());
+//                            String status = response.getString("status");
+//                            if (Integer.parseInt(status) == SUCCESS) {
+//                                Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
+//                                startActivity(intent);
+//                                saveUsername(phone);
+//                            } else {
+//                                showMessegeWarning("Vui lòng kiểm tra lại OTP");
+//                            }
+//                        } catch (JSONException e) {
+//                            Log.d("Error", "" + e);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError error) {
+//                        // handle error
+//                    }
+//                });
+ //   }
+
+    private void reSendOtp(final String phone) {
+        final int otp = randomWithRange(100000, 999999);
+
+        AndroidNetworking.post("http://barber123.herokuapp.com/sendOtp")
+                .addBodyParameter("phone", phone)
+                .addBodyParameter("otp", String.valueOf(otp))
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -84,46 +139,11 @@ public class ConfirmCodeActivity extends BaseActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("checkOtp", response.toString());
-                            String status = response.getString("status");
+                            String status = response.getString("CodeResult");
                             if (Integer.parseInt(status) == SUCCESS) {
-                                Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                saveUsername(phone);
-                            } else {
-                                showMessegeWarning("Vui lòng kiểm tra lại OTP");
-                            }
-                        } catch (JSONException e) {
-                            Log.d("Error", "" + e);
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                    }
-                });
-    }
-
-    private void reSendOtp(final String request_id, final String phone) {
-        final String phoneNumber = phone;
-        String subNumber = phoneNumber.substring(1, 10);
-        AndroidNetworking.post("http://barber123.herokuapp.com/confirmOTP")
-                .addBodyParameter("id", request_id)
-                .addBodyParameter("phone", subNumber)
-                .setTag("test")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("confirmOtp", response.toString());
-                            String status = response.getString("status");
-                            if (Integer.parseInt(status) == SUCCESS) {
-                                showMessegeSuccess("Mã đã gửi lại thành công");
-                                String id = response.getString("request_id");
-                                requestId = id;
+                                Log.d("sendOtp", response.toString());
+                                OTP = String.valueOf(otp);
+                                showMessegeSuccess("Vui lòng kiểm tra mã trong tin nhắn");
                             } else {
                                 showMessegeWarning("Vui lòng kiểm tra lại");
                             }
@@ -144,5 +164,10 @@ public class ConfirmCodeActivity extends BaseActivity {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString("PHONE", phoneNumber);
         edit.apply();
+    }
+
+    int randomWithRange(int min, int max) {
+        int range = Math.abs(max - min) + 1;
+        return (int) (Math.random() * range) + (min <= max ? min : max);
     }
 }
