@@ -7,7 +7,6 @@
 
     <application
         android:allowBackup="true"
-        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -55,16 +54,16 @@
             android:parentActivityName="com.example.barbershop."
             android:theme="@style/ThemeBarber" />
         <activity
-            android:name="com.example.barbershop.activity.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        </activity>
-        <activity
             android:name="com.example.barbershop.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBarber">
+        </activity>
+        <activity
+            android:name="com.example.barbershop.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

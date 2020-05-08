@@ -1,7 +1,11 @@
 package com.example.barbershop.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.example.authenticationsms.R;
+import com.pusher.pushnotifications.PushNotifications;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -30,10 +35,10 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     String phone = getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", "");
-                    if(phone.isEmpty()){
+                    if (phone.isEmpty()) {
                         Intent obj = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(obj);
-                    }else{
+                    } else {
                         Intent obj = new Intent(SplashActivity.this, HomeActivity.class);
                         startActivity(obj);
                     }
@@ -49,6 +54,4 @@ public class SplashActivity extends AppCompatActivity {
         finish();
 
     }
-
-
 }
