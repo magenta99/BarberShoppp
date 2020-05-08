@@ -47,6 +47,12 @@ public class MainActivity extends BaseActivity {
                 } else {
                     final String phoneNumber = edtPhone.getText().toString();
                     final int otp = randomWithRange(100000, 999999);
+                    Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phoneNumber", phoneNumber);
+                    bundle.putString("otp", String.valueOf(otp));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                         AndroidNetworking.post("http://barber123.herokuapp.com/sendOtp")
                                 .addBodyParameter("phone", phoneNumber)
                                 .addBodyParameter("otp", String.valueOf(otp))
@@ -60,12 +66,6 @@ public class MainActivity extends BaseActivity {
                                             String status = response.getString("CodeResult");
                                             if (Integer.parseInt(status) == SUCCESS) {
                                                 Log.d("sendOtp", response.toString());
-                                                Intent intent = new Intent(MainActivity.this, ConfirmCodeActivity.class);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("phoneNumber", phoneNumber);
-                                                bundle.putString("otp", String.valueOf(otp));
-                                                intent.putExtras(bundle);
-                                                startActivity(intent);
                                                 showMessegeSuccess("Vui lòng kiểm tra mã trong tin nhắn");
                                             } else {
                                                 showMessegeWarning("Vui lòng kiểm tra lại");
