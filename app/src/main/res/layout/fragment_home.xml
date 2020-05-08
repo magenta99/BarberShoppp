@@ -73,7 +73,7 @@
                                 android:text="Thành viên thường" />
 
                             <Button
-                                android:layout_width="160dp"
+                                android:layout_width="200dp"
                                 android:layout_height="30dp"
                                 android:layout_marginStart="-3dp"
                                 android:layout_marginTop="5dp"

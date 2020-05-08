@@ -25,7 +25,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
     private EditText edtPhone;
     private Button btnLogin;
-
     String requestId;
     private int SUCCESS = 0;
 
@@ -77,7 +76,6 @@ public class MainActivity extends BaseActivity {
                                     }
                                     @Override
                                     public void onError(ANError error) {
-                                        // handle error
                                     }
                                 });
                     }
