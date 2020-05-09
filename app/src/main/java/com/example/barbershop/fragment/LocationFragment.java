@@ -45,8 +45,9 @@ public class LocationFragment extends BaseFragment {
 
     static LocationFragment instance;
     public static LocationFragment getInstance(){
-
-        instance = new LocationFragment();
+        if(instance == null){
+            instance = new LocationFragment();
+        }
         return instance;
     }
 
@@ -81,7 +82,7 @@ public class LocationFragment extends BaseFragment {
                                 String districtLocation = jsonObject.getString("districtLocation");
                                 String districtDetailLocation = jsonObject.getString("districtDetailLocation");
                                 String cityLocation = jsonObject.getString("cityLocation");
-                                locationList.add( (idLocation, addressLocation, districtLocation, districtDetailLocation, cityLocation));
+                                locationList.add(new Location (idLocation, addressLocation, districtLocation, districtDetailLocation, cityLocation));
                             }
                             locationAdapter = new LocationAdapter(locationList, getContext());
                             gridLayoutManagerLocation = new GridLayoutManager(getContext(), 2);
