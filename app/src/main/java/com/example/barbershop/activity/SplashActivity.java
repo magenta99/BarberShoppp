@@ -20,7 +20,8 @@ import com.pusher.pushnotifications.PushNotifications;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
+    String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +56,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onPause();
         finish();
 
+    }
+
+    private String getRootUsername() {
+        String name;
+        name = this.getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", "");
+        return name;
     }
 }

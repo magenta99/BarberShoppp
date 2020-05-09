@@ -54,13 +54,6 @@
             android:parentActivityName="com.example.barbershop."
             android:theme="@style/ThemeBarber" />
         <activity
-
-            android:name="com.example.barbershop.activity.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBarber">
-        </activity>
-        <activity
             android:name="com.example.barbershop.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -69,6 +62,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.barbershop.activity.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBarber">
+
     </activity>
         <activity
             android:name="com.example.barbershop.activity.ConfirmCodeActivity"

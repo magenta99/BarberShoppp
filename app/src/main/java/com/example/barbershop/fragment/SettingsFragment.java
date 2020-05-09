@@ -1,13 +1,18 @@
 package com.example.barbershop.fragment;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,33 +20,49 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BSTActivity;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.SalonActivity;
 import com.example.barbershop.activity.TVActivity;
 import com.example.barbershop.activity.LoginActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends BaseFragment {
     LinearLayout llSignOut, llSalonList, llSalon, llTV, llHair;
     private TextView tvPhoneSettings;
+    private TextView tvNameUser;
+    private String name = "";
+    private Button btnEditUserr;
+    private BroadcastReceiver broadcastReceiver;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         initView(view);
-
         return view;
     }
 
     public void initView(View view) {
         tvPhoneSettings = view.findViewById(R.id.tvPhoneSettings);
+        tvNameUser = view.findViewById(R.id.tvNameUser);
         llSignOut = view.findViewById(R.id.llSignOut);
+        btnEditUserr = view.findViewById(R.id.btnEditUserr);
         llSalon = view.findViewById(R.id.llSalon);
         llHair = view.findViewById(R.id.llHair);
         llTV = view.findViewById(R.id.llTV);
@@ -102,15 +123,57 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        tvPhoneSettings.setText(getRootPhone());
+        getUsername(getRootPhone());
 
-        tvPhoneSettings.setText(getRootUsername());
-
+        btnEditUserr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                View mView = View.inflate(getContext(), R.layout.edit_user_item, null);
+                mBuilder.setView(mView);
+                mBuilder.setCancelable(true);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
     }
 
-    private String getRootUsername() {
+    private String getRootPhone() {
         String name;
-        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", "");
+        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", "");
         return name;
+    }
+
+    private String getRootName() {
+        String name;
+        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("USERNAME", "");
+        return name;
+    }
+
+    private void getUsername(String phoneNumber) {
+        AndroidNetworking.post("https://barber-shopp.herokuapp.com/findNameUser")
+                .addQueryParameter("phoneUser", getRootPhone())
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        tvNameUser.setText(response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
 }
