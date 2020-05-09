@@ -15,7 +15,8 @@ import com.example.authenticationsms.R;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
+    String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,10 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     String phone = getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", "");
-                    if(phone.isEmpty()){
+                    if (phone.isEmpty()) {
                         Intent obj = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(obj);
-                    }else{
+                    } else {
                         Intent obj = new Intent(SplashActivity.this, HomeActivity.class);
                         startActivity(obj);
                     }
@@ -50,5 +51,9 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-
+    private String getRootUsername() {
+        String name;
+        name = this.getSharedPreferences("USER", MODE_PRIVATE).getString("NAME", "");
+        return name;
+    }
 }

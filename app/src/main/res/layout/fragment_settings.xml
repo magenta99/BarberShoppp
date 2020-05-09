@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lê Huy Anh"
+                android:id="@+id/tvNameUser"
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp"
                 android:textStyle="bold" />
@@ -51,6 +51,7 @@
                 android:textColor="@color/colorBlack"
                 android:background="@drawable/button_white"
                 android:text="Chỉnh sửa thông tin"
+                android:id="@+id/btnEditUserr"
                 android:textSize="10dp" />
 
 
