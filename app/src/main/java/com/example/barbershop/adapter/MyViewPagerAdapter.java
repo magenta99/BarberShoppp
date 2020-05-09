@@ -1,5 +1,7 @@
 package com.example.barbershop.adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +20,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int i) {
+        Log.d("CountF", String.valueOf(i));
         switch (i){
             case 0:
                 return LocationFragment.getInstance();
