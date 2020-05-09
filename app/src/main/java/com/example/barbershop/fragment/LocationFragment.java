@@ -45,9 +45,8 @@ public class LocationFragment extends BaseFragment {
 
     static LocationFragment instance;
     public static LocationFragment getInstance(){
-        if(instance == null){
-            instance = new LocationFragment();
-        }
+
+        instance = new LocationFragment();
         return instance;
     }
 
@@ -55,6 +54,7 @@ public class LocationFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location, container, false);
+        loadLocation();
         initView(view);
         return view;
     }
@@ -62,7 +62,6 @@ public class LocationFragment extends BaseFragment {
         locationList = new ArrayList<>();
         locationList.clear();
         rvLocation = view.findViewById(R.id.rvLocation);
-        loadLocation();
     }
     private void loadLocation() {
         AndroidNetworking.get("https://barber-shopp.herokuapp.com/location")
@@ -82,7 +81,7 @@ public class LocationFragment extends BaseFragment {
                                 String districtLocation = jsonObject.getString("districtLocation");
                                 String districtDetailLocation = jsonObject.getString("districtDetailLocation");
                                 String cityLocation = jsonObject.getString("cityLocation");
-                                locationList.add(new Location(idLocation, addressLocation, districtLocation, districtDetailLocation, cityLocation));
+                                locationList.add( (idLocation, addressLocation, districtLocation, districtDetailLocation, cityLocation));
                             }
                             locationAdapter = new LocationAdapter(locationList, getContext());
                             gridLayoutManagerLocation = new GridLayoutManager(getContext(), 2);

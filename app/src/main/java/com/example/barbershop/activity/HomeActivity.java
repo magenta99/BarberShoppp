@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;
                 case R.id.navigation_book:
+
                     selectFragment = new BookingFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,selectFragment).commit();
                     break;

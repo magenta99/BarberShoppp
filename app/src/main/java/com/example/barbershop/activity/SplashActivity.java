@@ -26,6 +26,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        PushNotifications.start(getApplicationContext(), "f8f723dd-a9e2-4e4a-bbf2-287f01019905");
+        PushNotifications.addDeviceInterest("hello");
         Thread th = new Thread() {
             @Override
             public void run() {

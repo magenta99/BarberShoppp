@@ -131,7 +131,7 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_marginTop="2dp"
-                            android:src="@drawable/shampoo_shop" />
+                            android:src="@drawable/cleanser_shop" />
 
                         <TextView
                             android:layout_width="wrap_content"
