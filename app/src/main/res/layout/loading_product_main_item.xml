@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/colorWhite"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="140dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgProductMain"
+            android:layout_width="90dp"
+            android:background="@color/colorGrey"
+            android:layout_height="90dp"
+            android:layout_gravity="center" />
+
+        <View
+            android:id="@+id/tvNameProductMain"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/colorGrey"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="left"
+            android:text="iPad WiFi 128GB New 2018 Pink"
+            android:textColor="@color/colorBlack"
+            android:textSize="11dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/tvPriceProductMain"
+                android:layout_width="40dp"
+                android:layout_height="15dp"
+                android:background="@color/colorGrey"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp"
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -61,6 +61,22 @@ public class ConfirmCodeActivity extends BaseActivity {
                         Intent intent = new Intent(ConfirmCodeActivity.this, HomeActivity.class);
                         startActivity(intent);
                         savePhoneNumber(phone);
+                        AndroidNetworking.post("https://barber123.herokuapp.com/addUser?nameUser={nameUser}&phoneUser={phoneUser}")
+                                .addBodyParameter("nameUser", "Barber Member")
+                                .addBodyParameter("phoneUser", phone)
+                                .setTag("test")
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+
+                                    }
+                                    @Override
+                                    public void onError(ANError error) {
+                                        Log.e("Lỗi",""+error);
+                                    }
+                                });
 
                     } else {
                         showMessegeWarning("Vui lòng kiểm tra lại OTP");
@@ -121,5 +137,7 @@ public class ConfirmCodeActivity extends BaseActivity {
         int range = Math.abs(max - min) + 1;
         return (int) (Math.random() * range) + (min <= max ? min : max);
     }
+
+
 
 }

@@ -201,8 +201,35 @@
                 android:textSize="13dp" />
         </LinearLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayoutWaxMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <!-- Adding 15 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <include layout="@layout/loading_product_main_item" />
+                    <include layout="@layout/loading_product_main_item" />
+                    <include layout="@layout/loading_product_main_item" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWaxMain"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp" />

@@ -2,6 +2,7 @@ package com.example.barbershop.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ProductMainAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +55,7 @@ public class ShopFragment extends BaseFragment {
     private Button btnMallSearch;
     private TextView tvSeeMoreWax;
     private TextView tvSeeMoreCleanser;
-
+    private ShimmerFrameLayout shimmerFrameLayoutWaxMain;
 
     @Nullable
     @Override
@@ -67,6 +69,7 @@ public class ShopFragment extends BaseFragment {
         return view;
     }
     private void init(View view) {
+        shimmerFrameLayoutWaxMain = view.findViewById(R.id.shimmerFrameLayoutWaxMain);
         tvSeeMoreWax = view.findViewById(R.id.tvSeeMoreWax);
         tvSeeMoreCleanser = view.findViewById(R.id.tvSeeMoreCleanser);
         btnMallSearch = view.findViewById(R.id.btnMallSearch);
@@ -114,6 +117,7 @@ public class ShopFragment extends BaseFragment {
                     public void onResponse(JSONArray response) {
                         try {
                             for (int i = 0; i < response.length(); i++) {
+
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 String idProduct = jsonObject.getString("_id");
                                 String imageProduct = jsonObject.getString("imageProduct");
@@ -155,31 +159,39 @@ public class ShopFragment extends BaseFragment {
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String idProduct = jsonObject.getString("_id");
-                                String imageProduct = jsonObject.getString("imageProduct");
-                                String nameProduct = jsonObject.getString("nameProduct");
-                                String priceProduct = jsonObject.getString("priceProduct");
-                                String typeProduct = jsonObject.getString("typeProduct");
-                                String descriptionProduct = jsonObject.getString("descriptionProduct");
-                                String ratingProduct = jsonObject.getString("ratingProduct");
-                                shampooList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                    public void onResponse(final JSONArray response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        shimmerFrameLayoutWaxMain.stopShimmer();
+                                        shimmerFrameLayoutWaxMain.setVisibility(View.GONE);
+                                        rvWaxMain.setVisibility(View.VISIBLE);
+                                        JSONObject jsonObject = response.getJSONObject(i);
+                                        String idProduct = jsonObject.getString("_id");
+                                        String imageProduct = jsonObject.getString("imageProduct");
+                                        String nameProduct = jsonObject.getString("nameProduct");
+                                        String priceProduct = jsonObject.getString("priceProduct");
+                                        String typeProduct = jsonObject.getString("typeProduct");
+                                        String descriptionProduct = jsonObject.getString("descriptionProduct");
+                                        String ratingProduct = jsonObject.getString("ratingProduct");
+                                        shampooList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                    }
+                                    productMainAdapter = new ProductMainAdapter(getContext(), shampooList);
+                                    gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
+                                    rvShampooMain.setAdapter(productMainAdapter);
+                                    rvShampooMain.setLayoutManager(gridLayoutManager);
+                                    rvShampooMain.setHasFixedSize(true);
+                                    rvShampooMain.setNestedScrollingEnabled(false);
+                                    rvShampooMain.scheduleLayoutAnimation();
+                                    productMainAdapter.notifyDataSetChanged();
+                                    gridLayoutManager.setAutoMeasureEnabled(true);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            productMainAdapter = new ProductMainAdapter(getContext(), shampooList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false);
-                            rvShampooMain.setAdapter(productMainAdapter);
-                            rvShampooMain.setLayoutManager(gridLayoutManager);
-                            rvShampooMain.setHasFixedSize(true);
-                            rvShampooMain.setNestedScrollingEnabled(false);
-                            rvShampooMain.scheduleLayoutAnimation();
-                            productMainAdapter.notifyDataSetChanged();
-                            gridLayoutManager.setAutoMeasureEnabled(true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        },1500);
                     }
 
                     @Override
@@ -271,6 +283,19 @@ public class ShopFragment extends BaseFragment {
                         .commit();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayoutWaxMain.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shimmerFrameLayoutWaxMain.stopShimmer();
+
     }
 
 }
