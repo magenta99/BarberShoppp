@@ -1,6 +1,10 @@
 package com.example.barbershop.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.Toast;
@@ -8,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.authenticationsms.R;
 import com.pusher.pushnotifications.PushNotifications;
 
 import es.dmoral.toasty.Toasty;
@@ -40,4 +45,28 @@ public class BaseActivity extends AppCompatActivity {
     public void showMessegeError(String message3) {
         Toasty.error(this, message3, Toast.LENGTH_SHORT).show();
     }
+
+//    public static class ProgressDialogUtils {
+//
+//        public ProgressDialogUtils() {}
+//
+//        public static ProgressDialog showLoadingDialog(Context context) {
+//            ProgressDialog progressDialog = new ProgressDialog(context);
+//            progressDialog.setTitle(context.getResources().getString(R.string.progress_dialog_title));
+//            progressDialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
+//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            if(progressDialog.getWindow() != null) {
+//                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+//            }
+//            progressDialog.setContentView(R.layout.layout_progress);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setCancelable(true);
+//            progressDialog.setCanceledOnTouchOutside(false);
+//            //progressDialog.setMax(100);
+//            //progressDialog.setProgress(0);
+//            progressDialog.show();
+//            return progressDialog;
+//        }
+//
+//    }
 }

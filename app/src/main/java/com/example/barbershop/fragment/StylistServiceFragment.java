@@ -1,6 +1,9 @@
 package com.example.barbershop.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +45,8 @@ public class StylistServiceFragment extends Fragment {
     public LinearLayoutManager serviceLinerLayoutManager;
     public RecyclerView rvStylist;
     public RecyclerView rvService;
+    private BroadcastReceiver broadcastReceiver;
+    private String locationSchedule = "";
     public LocalBroadcastManager localBroadcastManager;
 
     static StylistServiceFragment instance;
@@ -66,12 +71,25 @@ public class StylistServiceFragment extends Fragment {
         rvStylist = view.findViewById(R.id.rvStylist);
         stylistList = new ArrayList<>();
         serviceList = new ArrayList<>();
-        loadStylist();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("My BroadCast");
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("My BroadCast")) {
+                    String location = intent.getStringExtra("location");
+                    locationSchedule = location;
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filter);
+        loadStylist(locationSchedule);
         loadService();
     }
 
-    private void loadStylist() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/stylist")
+    private void loadStylist(String location) {
+        AndroidNetworking.get("http://barber123.herokuapp.com/getStyList")
+                .addQueryParameter("location",location)
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
@@ -163,6 +181,12 @@ public class StylistServiceFragment extends Fragment {
                         // handle error
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
 }

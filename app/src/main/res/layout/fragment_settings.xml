@@ -218,30 +218,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/monitor" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:text="BarberShop TV"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="17dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/llSalon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

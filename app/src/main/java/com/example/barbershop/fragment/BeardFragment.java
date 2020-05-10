@@ -1,6 +1,7 @@
 package com.example.barbershop.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ProductAdapter;
 import com.example.barbershop.model.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class BeardFragment extends BaseFragment {
     private ArrayAdapter<String> spAdapter;
     private ImageButton btnBackBeard;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ShimmerFrameLayout shimmerFrameLayoutBeard;
 
     @Nullable
     @Override
@@ -53,6 +56,7 @@ public class BeardFragment extends BaseFragment {
 
     private void initView(View view){
         beardList = new ArrayList<>();
+        shimmerFrameLayoutBeard = view.findViewById(R.id.shimmerFrameLayoutBeard);
         btnBackBeard = view.findViewById(R.id.btnBackBeard);
         swipeRefreshLayout = view.findViewById(R.id.srlBeard);
         rvBread = view.findViewById(R.id.rvBeard);
@@ -125,31 +129,39 @@ public class BeardFragment extends BaseFragment {
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String idProduct = jsonObject.getString("_id");
-                                String imageProduct = jsonObject.getString("imageProduct");
-                                String nameProduct = jsonObject.getString("nameProduct");
-                                String priceProduct = jsonObject.getString("priceProduct");
-                                String typeProduct = jsonObject.getString("typeProduct");
-                                String descriptionProduct = jsonObject.getString("descriptionProduct");
-                                String ratingProduct = jsonObject.getString("ratingProduct");
-                                beardList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                    public void onResponse(final JSONArray response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        shimmerFrameLayoutBeard.stopShimmer();
+                                        shimmerFrameLayoutBeard.setVisibility(View.GONE);
+                                        rvBread.setVisibility(View.VISIBLE);
+                                        JSONObject jsonObject = response.getJSONObject(i);
+                                        String idProduct = jsonObject.getString("_id");
+                                        String imageProduct = jsonObject.getString("imageProduct");
+                                        String nameProduct = jsonObject.getString("nameProduct");
+                                        String priceProduct = jsonObject.getString("priceProduct");
+                                        String typeProduct = jsonObject.getString("typeProduct");
+                                        String descriptionProduct = jsonObject.getString("descriptionProduct");
+                                        String ratingProduct = jsonObject.getString("ratingProduct");
+                                        beardList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                    }
+                                    productAdapter = new ProductAdapter(getContext(), beardList);
+                                    gridLayoutManager = new GridLayoutManager(getContext(),2);
+                                    rvBread.setAdapter(productAdapter);
+                                    rvBread.setLayoutManager(gridLayoutManager);
+                                    rvBread.setHasFixedSize(true);
+                                    rvBread.setNestedScrollingEnabled(false);
+                                    rvBread.scheduleLayoutAnimation();
+                                    productAdapter.notifyDataSetChanged();
+                                    gridLayoutManager.setAutoMeasureEnabled(true);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            productAdapter = new ProductAdapter(getContext(), beardList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),2);
-                            rvBread.setAdapter(productAdapter);
-                            rvBread.setLayoutManager(gridLayoutManager);
-                            rvBread.setHasFixedSize(true);
-                            rvBread.setNestedScrollingEnabled(false);
-                            rvBread.scheduleLayoutAnimation();
-                            productAdapter.notifyDataSetChanged();
-                            gridLayoutManager.setAutoMeasureEnabled(true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        },1500);
                     }
 
                     @Override
@@ -245,6 +257,17 @@ public class BeardFragment extends BaseFragment {
                         // handle error
                     }
                 });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayoutBeard.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shimmerFrameLayoutBeard.stopShimmer();
 
     }
 }

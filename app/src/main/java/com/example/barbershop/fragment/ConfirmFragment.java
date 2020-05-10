@@ -78,7 +78,7 @@ public class ConfirmFragment extends Fragment {
                     String idSchedule = intent.getStringExtra("idSchedule");
                     locationBooking.setText(locationSchedule);
                     timeBooking.setText(timeSchedule);
-                    dateBooking.setText(dateSchedule + "/04");
+                    dateBooking.setText(dateSchedule + "/05");
                     stylistBooking.setText(stylistSchedule);
                     serviceBooking.setText(serviceSchedule);
 

@@ -21,6 +21,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.activity.HomeActivity;
@@ -33,6 +34,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class BookingFragment extends BaseFragment {
@@ -51,6 +54,7 @@ public class BookingFragment extends BaseFragment {
     private String nameStylistSchedule = "";
     private String nameServiceSchedule = "";
     private String idSchedule = "";
+    private String nameSchedule ;
 
     public BookingFragment() {
     }
@@ -73,6 +77,25 @@ public class BookingFragment extends BaseFragment {
         viewPagerStep = view.findViewById(R.id.viewPagerStep);
         btn_back = view.findViewById(R.id.btn_back);
         btn_next = view.findViewById(R.id.btn_next);
+        AndroidNetworking.post("https://barber-shopp.herokuapp.com/findNameUser")
+                .addQueryParameter("phoneUser", getRootPhone())
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        String name = response;
+                        nameSchedule = name;
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+
+
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("My BroadCast");
@@ -183,7 +206,7 @@ public class BookingFragment extends BaseFragment {
                     int month = calendar.get(Calendar.MONTH);
                     int monthChuan = month + 1;
                     String date = dateSchedule + "/" + monthChuan + "/" + "2020";
-                    sendDatatoBooking(idSchedule, locationSchedule, timeSchedule, date, nameServiceSchedule, nameStylistSchedule, false);
+                    sendDatatoBooking(nameSchedule,getRootPhone(),locationSchedule,timeSchedule,date,nameStylistSchedule,nameServiceSchedule,false,"");
                 }
             }
         });
@@ -210,15 +233,17 @@ public class BookingFragment extends BaseFragment {
         localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    private void sendDatatoBooking(String idSchedule, String locationSchedule, String timeSchedule, String dateSchedule, String serviceSchedule, String stylistSchedule, boolean statusSchedule) {
+    private void sendDatatoBooking(String nameSchedule, String phoneSchedule, String locationSchedule, String timeSchedule, String dateSchedule, String stylistSchedule, String serviceSchedule, boolean statusSchedule, String imageSchedule) {
         AndroidNetworking.post("https://barber-shopp.herokuapp.com/bookingSchedule")
-                .addQueryParameter("idSchedule", idSchedule)
+                .addQueryParameter("nameSchedule", nameSchedule)
+                .addQueryParameter("phoneSchedule", phoneSchedule)
                 .addQueryParameter("locationSchedule", locationSchedule)
                 .addQueryParameter("timeSchedule", timeSchedule)
                 .addQueryParameter("dateSchedule", dateSchedule)
-                .addQueryParameter("serviceSchedule", serviceSchedule)
                 .addQueryParameter("stylistSchedule", stylistSchedule)
+                .addQueryParameter("serviceSchedule", serviceSchedule)
                 .addQueryParameter("statusSchedule", String.valueOf(statusSchedule))
+                .addQueryParameter("imageSchedule", imageSchedule)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -262,5 +287,14 @@ public class BookingFragment extends BaseFragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
+    private void getUsername(String phoneNumber) {
+
+    }
+
+    private String getRootPhone() {
+        String name;
+        name = getContext().getSharedPreferences("USER", MODE_PRIVATE).getString("PHONE", "");
+        return name;
+    }
 }
 

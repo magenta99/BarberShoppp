@@ -1,6 +1,7 @@
 package com.example.barbershop.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ProductAdapter;
 import com.example.barbershop.model.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class CleanserFragment extends BaseFragment {
     private List<String> spList;
     private ArrayAdapter<String> spAdapter;
     private ImageButton btnBackCleanser;
+    private ShimmerFrameLayout shimmerFrameLayoutCleanser;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class CleanserFragment extends BaseFragment {
     }
 
     private void initView(View view){
+        shimmerFrameLayoutCleanser = view.findViewById(R.id.shimmerFrameLayoutCleanser);
         cleanserList = new ArrayList<>();
         rvCleanser = view.findViewById(R.id.rvCleanser);
         swipeRefreshLayout = view.findViewById(R.id.srlShampoo);
@@ -124,31 +128,39 @@ public class CleanserFragment extends BaseFragment {
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String idProduct = jsonObject.getString("_id");
-                                String imageProduct = jsonObject.getString("imageProduct");
-                                String nameProduct = jsonObject.getString("nameProduct");
-                                String priceProduct = jsonObject.getString("priceProduct");
-                                String typeProduct = jsonObject.getString("typeProduct");
-                                String descriptionProduct = jsonObject.getString("descriptionProduct");
-                                String ratingProduct = jsonObject.getString("ratingProduct");
-                                cleanserList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                    public void onResponse(final JSONArray response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        shimmerFrameLayoutCleanser.stopShimmer();
+                                        shimmerFrameLayoutCleanser.setVisibility(View.GONE);
+                                        rvCleanser.setVisibility(View.VISIBLE);
+                                        JSONObject jsonObject = response.getJSONObject(i);
+                                        String idProduct = jsonObject.getString("_id");
+                                        String imageProduct = jsonObject.getString("imageProduct");
+                                        String nameProduct = jsonObject.getString("nameProduct");
+                                        String priceProduct = jsonObject.getString("priceProduct");
+                                        String typeProduct = jsonObject.getString("typeProduct");
+                                        String descriptionProduct = jsonObject.getString("descriptionProduct");
+                                        String ratingProduct = jsonObject.getString("ratingProduct");
+                                        cleanserList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct,ratingProduct));
+                                    }
+                                    productAdapter = new ProductAdapter(getContext(), cleanserList);
+                                    gridLayoutManager = new GridLayoutManager(getContext(),2);
+                                    rvCleanser.setAdapter(productAdapter);
+                                    rvCleanser.setLayoutManager(gridLayoutManager);
+                                    rvCleanser.setHasFixedSize(true);
+                                    rvCleanser.setNestedScrollingEnabled(false);
+                                    rvCleanser.scheduleLayoutAnimation();
+                                    productAdapter.notifyDataSetChanged();
+                                    gridLayoutManager.setAutoMeasureEnabled(true);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            productAdapter = new ProductAdapter(getContext(), cleanserList);
-                            gridLayoutManager = new GridLayoutManager(getContext(),2);
-                            rvCleanser.setAdapter(productAdapter);
-                            rvCleanser.setLayoutManager(gridLayoutManager);
-                            rvCleanser.setHasFixedSize(true);
-                            rvCleanser.setNestedScrollingEnabled(false);
-                            rvCleanser.scheduleLayoutAnimation();
-                            productAdapter.notifyDataSetChanged();
-                            gridLayoutManager.setAutoMeasureEnabled(true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        },1500);
                     }
 
                     @Override
@@ -244,6 +256,18 @@ public class CleanserFragment extends BaseFragment {
                         // handle error
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayoutCleanser.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shimmerFrameLayoutCleanser.stopShimmer();
 
     }
 }

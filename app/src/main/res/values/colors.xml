@@ -14,6 +14,7 @@
     <color name="colorGrayBold">#AFAFAF</color>
     <color name="colorGreen">#34CE3C</color>
     <color name="colorUnselected">#DDDDDD</color>
+    <color name="colorGrey">#dddddd</color>
 
     <color name="colorOrange">#FDC830
 

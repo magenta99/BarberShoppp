@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,7 +97,11 @@ public class SettingsFragment extends BaseFragment {
         llHair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toasty.warning(getContext(), "Bạn không có lịch sử cắt tóc", Toast.LENGTH_SHORT).show();
+                HistoryFragment nextFrag= new HistoryFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -135,6 +140,61 @@ public class SettingsFragment extends BaseFragment {
                 mBuilder.setCancelable(true);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
+
+                final EditText edtEditUsername;
+                final Button btnEditUser;
+                final Button btnCancelEdt;
+
+                edtEditUsername = mView.findViewById(R.id.edtEditUsername);
+                btnEditUser = mView.findViewById(R.id.btnEditUser);
+                btnCancelEdt = mView.findViewById(R.id.btnCancelEdt);
+
+                btnCancelEdt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnEditUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            String username = edtEditUsername.getText().toString().trim();
+                            if (username.isEmpty()) {
+                                showMessegeWarning("Vui lòng nhập họ tên");
+                            }else {
+                                AndroidNetworking.post("https://barber-shopp.herokuapp.com/updateUser")
+                                        .addQueryParameter("name", username)
+                                        .addQueryParameter("phoneUser", getRootPhone())
+                                        .setTag("test")
+                                        .setPriority(Priority.MEDIUM)
+                                        .build()
+                                        .getAsJSONObject(new JSONObjectRequestListener() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+
+                                            }
+                                            @Override
+                                            public void onError(ANError error) {
+                                                Log.d("Lỗi",""+error);
+                                            }
+                                        });
+                                showMessegeSuccess("Sửa thành công");
+                                dialog.dismiss();
+                                SettingsFragment nextFrag = new SettingsFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
+
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+
             }
         });
     }

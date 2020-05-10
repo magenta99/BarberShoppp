@@ -1,6 +1,7 @@
 package com.example.barbershop.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ProductAdapter;
 import com.example.barbershop.adapter.ProductMainAdapter;
 import com.example.barbershop.model.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +46,7 @@ public class WaxFragment extends BaseFragment {
     private ArrayAdapter<String> spAdapter;
     private ImageButton btnBackWax;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ShimmerFrameLayout shimmerFrameLayoutWax;
 
     @Nullable
     @Override
@@ -55,6 +58,7 @@ public class WaxFragment extends BaseFragment {
     }
 
     private void initView(View view) {
+        shimmerFrameLayoutWax = view.findViewById(R.id.shimmerFrameLayoutWax);
         swipeRefreshLayout = view.findViewById(R.id.srlWax);
         waxList = new ArrayList<>();
         btnBackWax = view.findViewById(R.id.btnBackWax);
@@ -128,31 +132,39 @@ public class WaxFragment extends BaseFragment {
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String idProduct = jsonObject.getString("_id");
-                                String imageProduct = jsonObject.getString("imageProduct");
-                                String nameProduct = jsonObject.getString("nameProduct");
-                                String priceProduct = jsonObject.getString("priceProduct");
-                                String typeProduct = jsonObject.getString("typeProduct");
-                                String descriptionProduct = jsonObject.getString("descriptionProduct");
-                                String ratingProduct = jsonObject.getString("ratingProduct");
-                                waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct, ratingProduct));
+                    public void onResponse(final JSONArray response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        shimmerFrameLayoutWax.setVisibility(View.GONE);
+                                        rvWax.setVisibility(View.VISIBLE);
+                                        shimmerFrameLayoutWax.stopShimmer();
+                                        JSONObject jsonObject = response.getJSONObject(i);
+                                        String idProduct = jsonObject.getString("_id");
+                                        String imageProduct = jsonObject.getString("imageProduct");
+                                        String nameProduct = jsonObject.getString("nameProduct");
+                                        String priceProduct = jsonObject.getString("priceProduct");
+                                        String typeProduct = jsonObject.getString("typeProduct");
+                                        String descriptionProduct = jsonObject.getString("descriptionProduct");
+                                        String ratingProduct = jsonObject.getString("ratingProduct");
+                                        waxList.add(new Product(idProduct, imageProduct, nameProduct, priceProduct, typeProduct, descriptionProduct, ratingProduct));
+                                    }
+                                    productAdapter = new ProductAdapter(getContext(), waxList);
+                                    gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                                    rvWax.setAdapter(productAdapter);
+                                    rvWax.setLayoutManager(gridLayoutManager);
+                                    rvWax.setHasFixedSize(true);
+                                    rvWax.setNestedScrollingEnabled(false);
+                                    rvWax.scheduleLayoutAnimation();
+                                    productAdapter.notifyDataSetChanged();
+                                    gridLayoutManager.setAutoMeasureEnabled(true);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            productAdapter = new ProductAdapter(getContext(), waxList);
-                            gridLayoutManager = new GridLayoutManager(getContext(), 2);
-                            rvWax.setAdapter(productAdapter);
-                            rvWax.setLayoutManager(gridLayoutManager);
-                            rvWax.setHasFixedSize(true);
-                            rvWax.setNestedScrollingEnabled(false);
-                            rvWax.scheduleLayoutAnimation();
-                            productAdapter.notifyDataSetChanged();
-                            gridLayoutManager.setAutoMeasureEnabled(true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        },1500);
                     }
 
                     @Override
@@ -253,5 +265,16 @@ public class WaxFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayoutWax.startShimmer();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        shimmerFrameLayoutWax.stopShimmer();
+
+    }
 }

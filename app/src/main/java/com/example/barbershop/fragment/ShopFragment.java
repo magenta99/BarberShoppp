@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -52,6 +53,8 @@ public class ShopFragment extends BaseFragment {
     private LinearLayout llUnderwear;
     private LinearLayout llBeard;
     private Button btnMallSearch;
+
+
 
     @Nullable
     @Override
@@ -243,4 +246,5 @@ public class ShopFragment extends BaseFragment {
             }
         });
     }
+
 }
