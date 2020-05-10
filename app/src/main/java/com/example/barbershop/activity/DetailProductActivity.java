@@ -28,7 +28,6 @@ public class DetailProductActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
 
@@ -53,6 +52,7 @@ public class DetailProductActivity extends BaseActivity {
         if (tvDescriptionDetail != null)
             tvDescriptionDetail.setText(descriptionProduct);
         getSupportActionBar().setTitle(nameProduct);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +70,17 @@ public class DetailProductActivity extends BaseActivity {
             }
         });
 
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        if ( getFragmentManager().getBackStackEntryCount() > 0)
+        {
+            getFragmentManager().popBackStack();
+            return;
+        }
+        super.onBackPressed();
+    }
 }
