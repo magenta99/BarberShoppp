@@ -123,7 +123,7 @@ public class WaxFragment extends BaseFragment {
     }
 
     private void loadWaxProduct() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
+        AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -160,6 +160,10 @@ public class WaxFragment extends BaseFragment {
                                     rvWax.scheduleLayoutAnimation();
                                     productAdapter.notifyDataSetChanged();
                                     gridLayoutManager.setAutoMeasureEnabled(true);
+                                    if(waxList.size() == 0){
+                                        shimmerFrameLayoutWax.stopShimmer();
+                                        shimmerFrameLayoutWax.setVisibility(View.GONE);
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -176,7 +180,7 @@ public class WaxFragment extends BaseFragment {
     }
 
     private void loadWaxProductASC() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/asc?id={typeProduct}")
+        AndroidNetworking.get("https://barber123.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -221,7 +225,7 @@ public class WaxFragment extends BaseFragment {
     }
 
     private void loadWaxProductDSC() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/dsc?id={typeProduct}")
+        AndroidNetworking.get("https://barber123.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")

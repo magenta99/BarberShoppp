@@ -119,7 +119,7 @@ public class CleanserFragment extends BaseFragment {
     }
 
     private void loadCleanserProduct() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
+        AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Cleanser")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -171,7 +171,7 @@ public class CleanserFragment extends BaseFragment {
 
     }
     private void loadCleanserProductASC() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/asc?id={typeProduct}")
+        AndroidNetworking.get("https://barber123.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Cleanser")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -215,7 +215,7 @@ public class CleanserFragment extends BaseFragment {
 
     }
     private void loadCleanserProductDSC() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result/dsc?id={typeProduct}")
+        AndroidNetworking.get("https://barber123.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Cleanser")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")

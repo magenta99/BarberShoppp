@@ -81,7 +81,7 @@ public class SearchFragment extends BaseFragment {
     }
 
     private void loadShampooProduct(String nameProduct) {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/searchProduct?name={nameProduct}")
+        AndroidNetworking.get("https://barber123.herokuapp.com/searchProduct?name={nameProduct}")
                 .addPathParameter("nameProduct", nameProduct)
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")

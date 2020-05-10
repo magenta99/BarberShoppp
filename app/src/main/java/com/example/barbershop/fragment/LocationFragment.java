@@ -55,8 +55,8 @@ public class LocationFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location, container, false);
-        loadLocation();
         initView(view);
+        loadLocation();
         return view;
     }
     private void initView(View view) {
@@ -65,7 +65,7 @@ public class LocationFragment extends BaseFragment {
         rvLocation = view.findViewById(R.id.rvLocation);
     }
     private void loadLocation() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/location")
+        AndroidNetworking.get("https://barber123.herokuapp.com/location")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
@@ -84,6 +84,7 @@ public class LocationFragment extends BaseFragment {
                                 String cityLocation = jsonObject.getString("cityLocation");
                                 locationList.add(new Location (idLocation, addressLocation, districtLocation, districtDetailLocation, cityLocation));
                             }
+
                             locationAdapter = new LocationAdapter(locationList, getContext());
                             gridLayoutManagerLocation = new GridLayoutManager(getContext(), 2);
                             rvLocation.setLayoutManager(gridLayoutManagerLocation);
@@ -97,9 +98,9 @@ public class LocationFragment extends BaseFragment {
                                     intent.setAction("My BroadCast");
                                     intent.putExtra("location",location);
                                     localBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-                                    Toast.makeText(getContext(), ""+strLocation, Toast.LENGTH_SHORT).show();
                                 }
                             });
+
 
                         } catch (Error error) {
                             Log.e("Lỗi",""+error);

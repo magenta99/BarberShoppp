@@ -23,8 +23,85 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="4dp"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Họ tên"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/edtFullNameFinal"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/button_white_stroke"
+                        android:paddingStart="6dp"
+                        android:textSize="13dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/colorBlack" />
+
+                    <EditText
+                        android:id="@+id/edtPhoneFinal"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/button_white_stroke"
+                        android:paddingStart="6dp"
+                        android:inputType="phone"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:textSize="13dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Địa chỉ"
+                android:textColor="@color/colorBlack" />
+
+            <EditText
+                android:id="@+id/edtAddressFinal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/button_white_stroke"
+                android:paddingStart="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:textSize="13dp" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,23 +134,6 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Địa chỉ giao hàng:"
-                android:textColor="@color/colorBlack" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="67dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/edtAdressInCart"
-                android:background="@drawable/button_gray_stroke"
-                android:hint="Số nhà,phường/xã, quận/huyện, tỉnh/thành phố..."
-                android:paddingLeft="8dp"
-                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/btnOrderInCart"

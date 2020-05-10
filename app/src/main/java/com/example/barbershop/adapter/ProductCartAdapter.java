@@ -63,7 +63,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             @Override
             public void onClick(View view) {
                 ProductCartDAO productCartDAO = new ProductCartDAO(context);
-                if (productCartHolder.productCart.PRODUCT_CART_NUMBER > 0) {
+                if (productCartHolder.productCart.PRODUCT_CART_NUMBER > 1) {
                     productCartHolder.productCart.PRODUCT_CART_NUMBER--;
                     productCartDAO.updateProductCartAmount(new ProductCart("", productCartHolder.productCart.PRODUCT_CART_NUMBER, 0, ""), productCartHolder.productCart.PRODUCT_CART_NAME);
                     productCartHolder.tvNumber.setText(Integer.toString(productCartHolder.productCart.PRODUCT_CART_NUMBER));

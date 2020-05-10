@@ -23,6 +23,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.LocationAdapter;
 import com.example.barbershop.adapter.ServiceAdapter;
 import com.example.barbershop.adapter.StylistAdapter;
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StylistServiceFragment extends Fragment {
+public class StylistServiceFragment extends BaseFragment {
     public List<Stylist> stylistList;
     public List<Service> serviceList;
     public StylistAdapter stylistAdapter;
@@ -136,7 +137,7 @@ public class StylistServiceFragment extends Fragment {
     }
 
     private void loadService() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/service")
+        AndroidNetworking.get("https://barber123.herokuapp.com/service")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")

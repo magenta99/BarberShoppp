@@ -156,7 +156,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
                         } else if (address.isEmpty()) {
                             Toasty.warning(context, "Không để trống địa chỉ", Toast.LENGTH_SHORT).show();
                         } else {
-                            AndroidNetworking.post("http://barber-shopp.herokuapp.com/order")
+                            AndroidNetworking.post("http://barber123.herokuapp.com/oder")
                                     .addBodyParameter("imageProduct", urlImage)
                                     .addBodyParameter("nameProduct", holder.product.getNameProduct())
                                     .addBodyParameter("amountProduct", amount)

@@ -77,7 +77,7 @@ public class BookingFragment extends BaseFragment {
         viewPagerStep = view.findViewById(R.id.viewPagerStep);
         btn_back = view.findViewById(R.id.btn_back);
         btn_next = view.findViewById(R.id.btn_next);
-        AndroidNetworking.post("https://barber-shopp.herokuapp.com/findNameUser")
+        AndroidNetworking.post("https://barber123.herokuapp.com/findNameUser")
                 .addQueryParameter("phoneUser", getRootPhone())
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
@@ -234,7 +234,7 @@ public class BookingFragment extends BaseFragment {
     }
 
     private void sendDatatoBooking(String nameSchedule, String phoneSchedule, String locationSchedule, String timeSchedule, String dateSchedule, String stylistSchedule, String serviceSchedule, boolean statusSchedule, String imageSchedule) {
-        AndroidNetworking.post("https://barber-shopp.herokuapp.com/bookingSchedule")
+        AndroidNetworking.post("https://barber123.herokuapp.com/bookingSchedule")
                 .addQueryParameter("nameSchedule", nameSchedule)
                 .addQueryParameter("phoneSchedule", phoneSchedule)
                 .addQueryParameter("locationSchedule", locationSchedule)

@@ -66,7 +66,6 @@ public class SettingsFragment extends BaseFragment {
         btnEditUserr = view.findViewById(R.id.btnEditUserr);
         llSalon = view.findViewById(R.id.llSalon);
         llHair = view.findViewById(R.id.llHair);
-        llTV = view.findViewById(R.id.llTV);
         llSalonList = view.findViewById(R.id.llSalonList);
         llSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,13 +104,7 @@ public class SettingsFragment extends BaseFragment {
             }
         });
 
-        llTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), TVActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         llSalonList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +205,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void getUsername(String phoneNumber) {
-        AndroidNetworking.post("https://barber-shopp.herokuapp.com/findNameUser")
+        AndroidNetworking.post("https://barber123.herokuapp.com/findNameUser")
                 .addQueryParameter("phoneUser", getRootPhone())
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)

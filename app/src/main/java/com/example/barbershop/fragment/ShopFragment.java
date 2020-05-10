@@ -95,10 +95,10 @@ public class ShopFragment extends BaseFragment {
         loadWaxProduct();
         loadShampooProduct();
         tvProductCart.setText(Integer.toString(productCartDAO.getNumberInCart()));
-
     }
+
     private void loadWaxProduct() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
+        AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
@@ -142,7 +142,7 @@ public class ShopFragment extends BaseFragment {
 
     }
     private void loadShampooProduct() {
-        AndroidNetworking.get("https://barber-shopp.herokuapp.com/result?id={typeProduct}")
+        AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Shampoo")
                 .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
