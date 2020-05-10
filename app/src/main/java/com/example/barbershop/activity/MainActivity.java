@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
                                     }
                                 });
                     } else {
-                        showMessegeWarning("Vui lòng kiểm tra mạng");
+                        showMessegeWarning("Vui lòng bật mạng");
                     }
                 }
             }
