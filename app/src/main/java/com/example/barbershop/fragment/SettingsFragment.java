@@ -157,7 +157,7 @@ public class SettingsFragment extends BaseFragment {
                             if (username.isEmpty()) {
                                 showMessegeWarning("Vui lòng nhập họ tên");
                             }else {
-                                AndroidNetworking.post("https://barber-shopp.herokuapp.com/updateUser")
+                                AndroidNetworking.post("https://barber123.herokuapp.com/updateUser")
                                         .addQueryParameter("name", username)
                                         .addQueryParameter("phoneUser", getRootPhone())
                                         .setTag("test")

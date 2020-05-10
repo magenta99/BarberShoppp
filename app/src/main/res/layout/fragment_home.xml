@@ -78,6 +78,7 @@
                                 android:layout_marginStart="-3dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginBottom="4dp"
+                                android:id="@+id/btnBookNowHome"
                                 android:background="@drawable/button_gold"
                                 android:text="ĐẶT LỊCH NHẬN NGAY ƯU ĐÃI KHỦNG"
                                 android:textSize="10dp" />

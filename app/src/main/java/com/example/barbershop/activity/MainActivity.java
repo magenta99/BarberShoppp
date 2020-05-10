@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
 
                                     @Override
                                     public void onError(ANError error) {
-                                        // handle error
+                                        Log.e("Lỗi",""+error.toString());
                                     }
                                 });
                 }

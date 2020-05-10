@@ -124,7 +124,6 @@ public class ShampooFragment extends BaseFragment {
     private void loadShampooProduct() {
         AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Shampoo")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -184,7 +183,6 @@ public class ShampooFragment extends BaseFragment {
     private void loadShampooProductASC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Shampoo")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -236,7 +234,6 @@ public class ShampooFragment extends BaseFragment {
     private void loadShampooProductDSC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Shampoo")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)

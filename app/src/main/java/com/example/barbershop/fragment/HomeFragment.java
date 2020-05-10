@@ -29,6 +29,9 @@ public class HomeFragment extends BaseFragment {
     private ViewFlipper viewFlipper;
     private LocalBroadcastManager localBroadcastManager;
     Button btnBookNow1, btnBookNow2;
+    private Button btnBookNowHome;
+
+
 
     @Nullable
     @Override
@@ -40,11 +43,11 @@ public class HomeFragment extends BaseFragment {
             flipperImages(image);
         }
 
-
         return view;
     }
 
     private void flipperImages(int image) {
+
         ImageView imageView = new ImageView(getContext());
         imageView.setBackgroundResource(image);
         viewFlipper.addView(imageView);
@@ -54,6 +57,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initView(View view) {
+        btnBookNowHome = view.findViewById(R.id.btnBookNowHome);
+
         btnBookNow1 = view.findViewById(R.id.btnBookNow1);
         btnBookNow2 = view.findViewById(R.id.btnBookNow2);
 
@@ -70,6 +75,17 @@ public class HomeFragment extends BaseFragment {
         });
 
         btnBookNow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookingFragment nextFrag = new BookingFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        btnBookNowHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BookingFragment nextFrag = new BookingFragment();

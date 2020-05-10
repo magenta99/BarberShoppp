@@ -122,7 +122,6 @@ public class BeardFragment extends BaseFragment {
     private void loadBeardProduct() {
         AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Beard")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -174,7 +173,6 @@ public class BeardFragment extends BaseFragment {
     private void loadBeardProductASC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Beard")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -218,7 +216,6 @@ public class BeardFragment extends BaseFragment {
     private void loadBeardProductDSC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Beard")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)

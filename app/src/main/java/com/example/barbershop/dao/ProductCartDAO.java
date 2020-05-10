@@ -135,5 +135,17 @@ public class ProductCartDAO {
         return soluong;
     }
 
+    public boolean checkProduct(String nameProduct) {
+        boolean result = false;
+        String query = "select * from GioHang where TenSanPham = '" + nameProduct + "' ";
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            result = true;
+        }
+        c.close();
+        return result;
+    }
+
 }
 

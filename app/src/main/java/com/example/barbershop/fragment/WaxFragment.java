@@ -125,7 +125,6 @@ public class WaxFragment extends BaseFragment {
     private void loadWaxProduct() {
         AndroidNetworking.get("http://barber123.herokuapp.com/result?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -182,7 +181,6 @@ public class WaxFragment extends BaseFragment {
     private void loadWaxProductASC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/asc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -227,7 +225,6 @@ public class WaxFragment extends BaseFragment {
     private void loadWaxProductDSC() {
         AndroidNetworking.get("https://barber123.herokuapp.com/result/dsc?id={typeProduct}")
                 .addPathParameter("typeProduct", "Sáp")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)

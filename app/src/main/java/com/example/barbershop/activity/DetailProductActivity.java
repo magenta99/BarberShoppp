@@ -58,8 +58,10 @@ public class DetailProductActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    if (productCartDAO.insertProductCart
-                    (new ProductCart(nameProduct, 1, Integer.parseInt(priceProduct), urlImage)) >= 0) {
+                    if (productCartDAO.checkProduct(nameProduct) == true) {
+                        showMessegeWarning("Sản phẩm đã tồn tại");
+                    } else if (productCartDAO.insertProductCart
+                            (new ProductCart(nameProduct, 1, Integer.parseInt(priceProduct), urlImage)) >= 0) {
                         showMessegeSuccess("Thêm vào giỏ hàng thành công");
                     }
                 } catch (Exception e) {

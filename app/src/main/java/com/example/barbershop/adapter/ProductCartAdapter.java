@@ -1,7 +1,6 @@
 package com.example.barbershop.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.authenticationsms.R;
-import com.example.barbershop.activity.CartActivity;
 import com.example.barbershop.dao.ProductCartDAO;
+import com.example.barbershop.fragment.BeardFragment;
+import com.example.barbershop.fragment.CartFragment;
 import com.example.barbershop.model.ProductCart;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +56,13 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
                 productCartHolder.productCart.PRODUCT_CART_NUMBER++;
                 productCartDAO.updateProductCartAmount(new ProductCart("", productCartHolder.productCart.PRODUCT_CART_NUMBER, 0, ""), productCartHolder.productCart.PRODUCT_CART_NAME);
                 productCartHolder.tvNumber.setText(Integer.toString(productCartHolder.productCart.PRODUCT_CART_NUMBER));
-                ((CartActivity) context).recreate();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                CartFragment nextFrag = new CartFragment();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -67,8 +74,12 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
                     productCartHolder.productCart.PRODUCT_CART_NUMBER--;
                     productCartDAO.updateProductCartAmount(new ProductCart("", productCartHolder.productCart.PRODUCT_CART_NUMBER, 0, ""), productCartHolder.productCart.PRODUCT_CART_NAME);
                     productCartHolder.tvNumber.setText(Integer.toString(productCartHolder.productCart.PRODUCT_CART_NUMBER));
-                    ((CartActivity) context).recreate();
-
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    CartFragment nextFrag = new CartFragment();
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
                 } else {
                     Toasty.warning(context, "Số lượng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
                 }
@@ -82,9 +93,13 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
                 removeProductCart(position);
                 productCartDAO.deleteProductCart(productCartHolder.productCart.PRODUCT_CART_NAME);
                 Toasty.success(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                ((CartActivity) context).recreate();
 //                context.sendBroadcast(new Intent("update"));
-
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                CartFragment nextFrag = new CartFragment();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

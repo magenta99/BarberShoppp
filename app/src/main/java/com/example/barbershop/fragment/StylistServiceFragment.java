@@ -91,7 +91,6 @@ public class StylistServiceFragment extends BaseFragment {
     private void loadStylist(String location) {
         AndroidNetworking.get("http://barber123.herokuapp.com/getStyList")
                 .addQueryParameter("location",location)
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)
@@ -138,7 +137,6 @@ public class StylistServiceFragment extends BaseFragment {
 
     private void loadService() {
         AndroidNetworking.get("https://barber123.herokuapp.com/service")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.HIGH)

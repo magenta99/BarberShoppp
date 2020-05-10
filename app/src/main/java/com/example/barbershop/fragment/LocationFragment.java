@@ -66,7 +66,6 @@ public class LocationFragment extends BaseFragment {
     }
     private void loadLocation() {
         AndroidNetworking.get("https://barber123.herokuapp.com/location")
-                .addQueryParameter("limit", "3")
                 .addHeaders("token", "1234")
                 .setTag("test")
                 .setPriority(Priority.LOW)

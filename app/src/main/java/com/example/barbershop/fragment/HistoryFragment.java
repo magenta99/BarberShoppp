@@ -88,7 +88,7 @@ public class HistoryFragment extends BaseFragment {
         btnBackHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SettingsFragment nextFrag= new SettingsFragment();
+                SettingsFragment nextFrag = new SettingsFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -137,16 +137,16 @@ public class HistoryFragment extends BaseFragment {
                                     rvHistory.setHasFixedSize(true);
                                     rvHistory.setNestedScrollingEnabled(false);
                                     rvHistory.scheduleLayoutAnimation();
-                                    if(historyList.size() == 0){
+                                    if (historyList.size() == 0) {
                                         shimmerFrameLayout.stopShimmer();
                                         shimmerFrameLayout.setVisibility(View.GONE);
                                     }
 
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+
                                 }
                             }
-                        },2000);
+                        }, 2000);
                     }
 
                     @Override

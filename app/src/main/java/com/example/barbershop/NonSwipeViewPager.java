@@ -1,4 +1,4 @@
-package com.example.barbershop.model;
+package com.example.barbershop;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -18,10 +18,10 @@ public class NonSwipeViewPager extends ViewPager {
         setMyScroller();
     }
 
-
     public NonSwipeViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setMyScroller();
+
     }
 
     @Override
@@ -29,15 +29,10 @@ public class NonSwipeViewPager extends ViewPager {
         return false;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        return false;
-    }
-
     private void setMyScroller() {
         try {
-            Class<?> viewPager = ViewPager.class;
-            Field scroller = viewPager.getDeclaredField("mScroller");
+            Class<?> viewpager = ViewPager.class;
+            Field scroller = viewpager.getDeclaredField("mScroller");
             scroller.setAccessible(true);
             scroller.set(this,new MyScroller(getContext()));
         } catch (NoSuchFieldException e) {
@@ -47,11 +42,9 @@ public class NonSwipeViewPager extends ViewPager {
         }
     }
 
-
     private class MyScroller extends Scroller {
         public MyScroller(Context context) {
-            super(context,new DecelerateInterpolator());
-
+            super(context,new DecelerateInterpolator( ));
         }
 
         @Override
@@ -59,4 +52,5 @@ public class NonSwipeViewPager extends ViewPager {
             super.startScroll(startX, startY, dx, dy, 350);
         }
     }
-}
+    }
+

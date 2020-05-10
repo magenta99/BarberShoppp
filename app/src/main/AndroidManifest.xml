@@ -3,6 +3,8 @@
     package="com.example.authenticationsms">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
 
     <application
@@ -44,10 +46,6 @@
             android:name="com.example.barbershop.activity.SuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name="com.example.barbershop.activity.CartActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ThemeBarber" />
         <activity
             android:name="com.example.barbershop.activity.DetailProductActivity"
             android:screenOrientation="portrait"

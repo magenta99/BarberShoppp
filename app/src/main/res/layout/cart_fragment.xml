@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_alignParentTop="true"
+        app:cardBackgroundColor="@color/colorGold"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <ImageButton
+                android:id="@+id/btnBackCart"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/ic_arrow_back_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="3.5"
+                android:gravity="center"
+                android:text="Giỏ hàng"
+                android:textColor="@color/colorWhite"
+                android:textSize="19dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCartProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout2"
+        android:layout_below="@+id/cardView"
         android:layout_margin="4dp" />
 
     <LinearLayout

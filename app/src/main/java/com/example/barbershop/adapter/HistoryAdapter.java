@@ -54,7 +54,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
     public void onBindViewHolder(@NonNull final HistoryHolder historyHolder, final int position) {
         historyHolder.history = historyList.get(position);
         final String urlImage = historyHolder.history.getImageHistory();
-        Picasso.get().load(urlImage).into(historyHolder.imgImageHistory);
+        try{
+            Picasso.get().load(urlImage).into(historyHolder.imgImageHistory);
+        }catch (Exception e){
+
+        }
         historyHolder.tvTimeHistory.setText("Thời gian: " + historyHolder.history.getTimeHistory() + " - " + historyHolder.history.getDateHistory());
         historyHolder.tvLocationHistory.setText("Cơ sở: "+ historyHolder.history.getLocationHistory());
         historyHolder.tvServiceHistory.setText("Dịch vụ: "+ historyHolder.history.getServiceHistory());

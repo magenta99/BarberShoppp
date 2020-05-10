@@ -1,22 +1,25 @@
-package com.example.barbershop.activity;
+package com.example.barbershop.fragment;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.authenticationsms.R;
+import com.example.barbershop.activity.BaseFragment;
 import com.example.barbershop.adapter.ProductCartAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.ProductCart;
@@ -26,11 +29,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
-
 import static com.example.barbershop.adapter.ProductAdapter.decimalFormat;
 
-public class CartActivity extends BaseActivity {
+public class CartFragment extends BaseFragment {
     ProductCartDAO productCartDAO;
     ProductCartAdapter productCartAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -41,31 +42,41 @@ public class CartActivity extends BaseActivity {
     private EditText edtFullNameFinal;
     private EditText edtPhoneFinal;
     private EditText edtAddressFinal;
+    private ImageButton btnBackCart;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Giỏ hàng");
-        initView();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.cart_fragment, container, false);
+        initView(view);
+        return view;
     }
 
-    private void initView() {
-        edtFullNameFinal = findViewById(R.id.edtFullNameFinal);
-        edtPhoneFinal = findViewById(R.id.edtPhoneFinal);
-        edtAddressFinal = findViewById(R.id.edtAddressFinal);
-        btnOrderInCart = findViewById(R.id.btnOrderInCart);
-        tvSumPrice = findViewById(R.id.tvSumPrice);
-        linearLayoutManager = new LinearLayoutManager(this);
-        productCartDAO = new ProductCartDAO(this);
+    private void initView(View view) {
+        btnBackCart = view.findViewById(R.id.btnBackCart);
+        edtFullNameFinal = view.findViewById(R.id.edtFullNameFinal);
+        edtPhoneFinal = view.findViewById(R.id.edtPhoneFinal);
+        edtAddressFinal = view.findViewById(R.id.edtAddressFinal);
+        btnOrderInCart = view.findViewById(R.id.btnOrderInCart);
+        tvSumPrice = view.findViewById(R.id.tvSumPrice);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        productCartDAO = new ProductCartDAO(getContext());
         productCartList = new ArrayList<>();
         productCartList = productCartDAO.getAllProductCart();
-        recyclerView = findViewById(R.id.rvCartProduct);
-        productCartAdapter = new ProductCartAdapter(this, productCartList);
+        recyclerView = view.findViewById(R.id.rvCartProduct);
+        productCartAdapter = new ProductCartAdapter(getContext(), productCartList);
         recyclerView.setAdapter(productCartAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
+        btnBackCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShopFragment nextFrag = new ShopFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         double tongtien = productCartDAO.getTongTien();
         if (tvSumPrice != null)
@@ -89,7 +100,7 @@ public class CartActivity extends BaseActivity {
                     } else {
                         for (int i = 0; i <= productCartList.size(); i++) {
                             ProductCart productCart = productCartList.get(i);
-                            int sumPrice = productCart.PRODUCT_CART_PRICE ;
+                            int sumPrice = productCart.PRODUCT_CART_PRICE;
                             AndroidNetworking.post("http://barber123.herokuapp.com/oder")
                                     .addBodyParameter("imageProduct", productCart.PRODUCT_CART_IMAGE)
                                     .addBodyParameter("nameProduct", productCart.PRODUCT_CART_NAME)
@@ -110,7 +121,11 @@ public class CartActivity extends BaseActivity {
                                             edtPhoneFinal.setText("");
                                             productCartDAO.deleteCart();
                                             productCartAdapter.notifyDataSetChanged();
-                                            (CartActivity.this).recreate();
+                                            CartFragment nextFrag = new CartFragment();
+                                            getActivity().getSupportFragmentManager().beginTransaction()
+                                                    .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                                                    .addToBackStack(null)
+                                                    .commit();
                                         }
 
                                         @Override
@@ -125,7 +140,6 @@ public class CartActivity extends BaseActivity {
                 } catch (Exception e) {
 
                 }
-
 
 
             }

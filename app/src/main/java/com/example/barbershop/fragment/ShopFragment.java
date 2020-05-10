@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,7 +23,6 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.authenticationsms.R;
 import com.example.barbershop.activity.BaseFragment;
-import com.example.barbershop.activity.CartActivity;
 import com.example.barbershop.adapter.ProductMainAdapter;
 import com.example.barbershop.dao.ProductCartDAO;
 import com.example.barbershop.model.Product;
@@ -69,6 +67,8 @@ public class ShopFragment extends BaseFragment {
         return view;
     }
     private void init(View view) {
+        tvSeeMoreWax = view.findViewById(R.id.tvSeeMoreWax);
+        tvSeeMoreCleanser = view.findViewById(R.id.tvSeeMoreCleanser);
         btnMallSearch = view.findViewById(R.id.btnMallSearch);
         llWax = view.findViewById(R.id.llWax);
         llCleanser = view.findViewById(R.id.llCleanser);
@@ -82,8 +82,11 @@ public class ShopFragment extends BaseFragment {
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CartActivity.class);
-                startActivity(intent);
+                CartFragment nextFrag = new CartFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         viewFlipper = view.findViewById(R.id.vpShopSlider);
@@ -240,6 +243,28 @@ public class ShopFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 SearchFragment nextFrag= new SearchFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        tvSeeMoreWax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WaxFragment nextFrag= new WaxFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        tvSeeMoreCleanser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CleanserFragment nextFrag= new CleanserFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_layout, nextFrag, "findThisFragment")
                         .addToBackStack(null)
