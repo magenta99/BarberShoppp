@@ -195,6 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
+                android:id="@+id/tvSeeMoreWax"
                 android:text="Xem thêm"
                 android:textColor="@color/colorBlack"
                 android:textSize="13dp" />
@@ -229,6 +230,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
+                android:id="@+id/tvSeeMoreCleanser"
                 android:text="Xem thêm"
                 android:textColor="@color/colorBlack"
                 android:textSize="13dp" />

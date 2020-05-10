@@ -53,7 +53,8 @@ public class ShopFragment extends BaseFragment {
     private LinearLayout llUnderwear;
     private LinearLayout llBeard;
     private Button btnMallSearch;
-
+    private TextView tvSeeMoreWax;
+    private TextView tvSeeMoreCleanser;
 
 
     @Nullable
